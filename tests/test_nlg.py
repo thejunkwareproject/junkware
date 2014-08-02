@@ -3,7 +3,6 @@
 
 import unittest
 import os
-import shutil
 
 from _helpers import TestHelpers
 helpers=TestHelpers()
@@ -35,12 +34,9 @@ class ObjectGeneratorTest(unittest.TestCase):
         self.object.add_patent_data_to_corpus(2, random=True)
         self.assertTrue(len(self.object.corpus)==5)
 
-    def test_generate_corpus(self):
+    def test_generate_corpus_files(self):
         
-        if os.path.isdir(test_corpus_path):
-            shutil.rmtree(test_corpus_path)
-
-        self.object.generate_corpus()
+        self.object.generate_corpus_files()
         self.assertTrue(os.path.isdir(test_corpus_path)==True)
 
         filename=os.path.join(test_corpus_path,"1.txt")
@@ -50,8 +46,8 @@ class ObjectGeneratorTest(unittest.TestCase):
         print test_text[0:4],text[0:4]
         self.assertTrue(test_text[0:4]==text[0:4])
 
-    def test_load_nltk_corpus(self):
-        self.object.load_nltk_corpus()
+    def test_load_corpus(self):
+        self.object.load_corpus()
         self.assertIsNotNone(self.object.generator)
 
     def _generate_text(self):
