@@ -4,17 +4,32 @@
 import os
 from lib.generator import ObjectGenerator
 from lib.nlp import NLP
+from lib.corpus import *
 
-# vars
+
+# init patents db
+patents=PatentCorpus('./data/patents/Patents.sqlite3')
+
+# Generate Wikipedia category graph
+wiki_en=WikiCorpus('./data/wikipedia',"en")
+wiki_en.create_wiki_graph()
+
+
+# Create an object
 test_corpus_path = os.path.join(os.getcwd(), 'data/corpus')
-
-'./data/Patents.sqlite3'
-
-# Generate an object
 weird_object = ObjectGenerator(test_corpus_path, {})
-weird_object.add_patent_data_to_corpus(10, random=True)
-weird_object.load_corpus()
 
+# add 5 random records from patents db
+for patent in patents.get_records(5, random=True):
+    weird_object.add_to_corpus(patent)
+
+# add a few random articles from wikipedia
+for article in wiki_en.get_random_texts():
+    weird_object.add_to_corpus(article)
+print wiki_en.selected
+
+# create corpus
+weird_object.load_corpus()
 descriptions = weird_object.generate_definition(1, 20)
 
 print descriptions[0]

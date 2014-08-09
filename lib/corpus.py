@@ -25,6 +25,7 @@ class WikiCorpus(object):
         self.out_path = os.path.join(corpusdir, "out")
         print self.wk_path
         self.categories = nx.Graph()
+        self.selected=[]
 
     def create_wiki_graph(self):
         """ Create wiki graph representation of categories"""
@@ -79,7 +80,7 @@ class WikiCorpus(object):
         ''' Generate CSV files for Gephi'''
         nx_to_gephi_csv(self.categories, "wiki_categories", path)
 
-    def select_random_nodes(self):
+    def get_random_nodes(self):
         ''' Select two random nodes from the graph
             return a tuple of 2 nodes
         '''
@@ -93,6 +94,7 @@ class WikiCorpus(object):
         possible_nodes.difference_update(neighbours)
         second_node = choice(list(possible_nodes))      # pick second node
 
+        self.selected+=[first_node, second_node]
         return [first_node, second_node]
 
     def get_corpus_from_node(self, node):
@@ -100,12 +102,23 @@ class WikiCorpus(object):
         Retrieve a set of text file paths from category graph node
         return a [] of texts path
         '''
-        files = []
+        texts = []
         for myfile in os.listdir(self.categories[node]["path"]):
             if myfile.endswith(".txt"):
-                files.append(
-                    os.path.join(self.categories[node]["path"], myfile))
-        return files
+                path=os.path.join(self.categories[node]["path"], myfile)
+                with open (path, "r") as myfile:
+                    text=myfile.read().replace('\n', '')
+                    texts.append(text)
+        return texts
+
+    def get_random_texts(self):
+        """ retrieve a set of texts based on 2 random  categories"
+        """
+        texts=[]
+        nodes=self.get_random_nodes()
+        for node in nodes:
+            texts+=self.get_corpus_from_node(node)
+        return texts
 
 class PatentCorpus(object):
 
