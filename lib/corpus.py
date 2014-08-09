@@ -1,35 +1,157 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import os
-from nltk.corpus.reader.plaintext import PlaintextCorpusReader
+from fnmatch import fnmatch
+import yaml
+import networkx as nx
+from utils import nx_to_gv_file, nx_to_gephi_csv, slugify
+from random import choice, randint
 import sqlite3
 
-conn = sqlite3.connect('./data/patdesc.sqlite3')
-cursor = conn.cursor()
 
+# some characters to avoid
+stopwords = ["(", ")", "/"]
 
-corpus = []
-corpusdir = 'tests/test_corpus/'
+class WikiCorpus(object):
 
-stopwords=["(", ")", "/"]
-for row in cursor.execute("SELECT * FROM patdesc WHERE (abstract!='') LIMIT 10" ):
-    text= ''.join([i for i in row[1] if not i.isdigit() and i not in stopwords])
-    corpus.append(text)
+    '''
+    Generate Wikipedia corpus
 
+    '''
 
-# Make new dir for the corpus.
-if not os.path.isdir(corpusdir):
-    os.mkdir(corpusdir)
+    def __init__(self, corpusdir, language):
+        self.language = language
+        self.wk_path = os.path.join(corpusdir, language)
+        self.out_path = os.path.join(corpusdir, "out")
+        print self.wk_path
+        self.categories = nx.Graph()
 
-# Output the files into the directory.
-filename = 0
-for text in corpus:
-    filename+=1
-    with open(corpusdir+str(filename)+'.txt','w') as fout:
-        print>>fout, text
+    def create_wiki_graph(self):
+        """ Create wiki graph representation of categories"""
 
-# Check that our corpus do exist and the files are correct.
-# assert os.path.isdir(corpusdir)
-# for infile, text in zip(sorted(os.listdir(corpusdir)),corpus):
-#     assert open(corpusdir+infile,'r').read().strip() == text.strip()
+        print 'Creating wiki corpus graph representation'
+
+        for path, subdirs, files in os.walk(self.wk_path):
+
+            here = os.path.split(path)[1]
+            parent = os.path.split(os.path.split(path)[0])[1]
+
+            self.categories.add_edge(parent, here)
+
+            self.categories[parent]["path"] = path
+            self.categories[here]["path"] = path
+
+            for name in files:
+                if fnmatch(name, "*.yaml"):  # check if there is a text file
+
+                    category_name = name[0:-5]
+                    yaml_file_path = os.path.join(
+                        path, category_name + ".yaml")
+
+                    # yaml
+                    yaml_file = open(yaml_file_path, "r")
+                    docs = yaml.load_all(yaml_file)
+
+                    # category_name
+                    for doc in docs:
+                        cat_parent = doc["CategoryPath"][0]
+
+                        self.categories.add_edge(
+                            slugify(cat_parent), slugify(category_name))
+                        self.categories[slugify(cat_parent)]["path"] = path
+                        self.categories[slugify(category_name)]["path"] = path
+
+                        for cat in doc["Categories"][0][self.language]:
+                            self.categories.add_edge(
+                                slugify(category_name), slugify(cat))
+                            self.categories[slugify(cat)]["path"] = path
+
+        print("The categories graph %s has %d nodes with %d edges"
+              % (self.categories.name,
+                 nx.number_of_nodes(self.categories),
+                 nx.number_of_edges(self.categories)))
+
+    def create_wiki_graphviz(self, path):
+        ''' Visualize the wiki corpus with Graphviz '''
+        nx_to_gv_file(self.categories, "wiki_categories", path)
+
+    def create_wiki_gephi_files(self, path):
+        ''' Generate CSV files for Gephi'''
+        nx_to_gephi_csv(self.categories, "wiki_categories", path)
+
+    def select_random_nodes(self):
+        ''' Select two random nodes from the graph
+            return a tuple of 2 nodes
+        '''
+
+        first_node = choice(self.categories.nodes())  # pick a random node
+
+        possible_nodes = set(self.categories.nodes())
+        neighbours = self.categories.neighbors(first_node) + [first_node]
+
+        # remove the first node and all its neighbours from the candidates
+        possible_nodes.difference_update(neighbours)
+        second_node = choice(list(possible_nodes))      # pick second node
+
+        return [first_node, second_node]
+
+    def get_corpus_from_node(self, node):
+        '''
+        Retrieve a set of text file paths from category graph node
+        return a [] of texts path
+        '''
+        files = []
+        for myfile in os.listdir(self.categories[node]["path"]):
+            if myfile.endswith(".txt"):
+                files.append(
+                    os.path.join(self.categories[node]["path"], myfile))
+        return files
+
+class PatentCorpus(object):
+
+    """ Patent corpus """
+
+    def __init__(self, patent_db):
+        conn_patents = sqlite3.connect(patent_db)
+        self.patents = conn_patents.cursor()
+
+    def get_column_names(self):
+        ''' Rows should be : Patent, Title, Abstract '''
+        cols=[]
+        for c in self.patents.execute("PRAGMA table_info('Patents');"): cols.append(c[1])
+        return cols
+
+    def get_records(self, _count, random=False):
+        """
+            Get a number of patents
+            return :
+            patents in full text
+        """
+
+        patents=[]
+
+        max_id = [max[0] for max in self.patents.execute("SELECT MAX(Id) FROM Patents;")][0]
+        order = " ORDER BY id ASC "
+
+        if (random == True):
+            ids = ""
+            rands = [randint(1, max_id) for x in range(0, _count)]
+            for i, _id in enumerate(rands):
+                ids += "" + str(_id) + ""
+                if i != _count - 1:
+                    ids += ","
+
+            order = " AND id IN (" + ids + ")"
+
+        query = "SELECT * FROM Patents WHERE (Description!='')" + \
+            order + " LIMIT " + str(_count)
+        # print query
+
+        for row in self.patents.execute(query):
+            # remove numbers and some unwantable characters
+            text = ''.join(
+                [i for i in row[2] if not i.isdigit() and i not in stopwords])
+
+            patents.append(str(text))
+
+        return patents

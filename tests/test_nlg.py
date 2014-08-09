@@ -9,8 +9,13 @@ helpers=TestHelpers()
 helpers.add_relative_path()
 
 from lib.generator import ObjectGenerator
+from lib.corpus import PatentCorpus
 
 test_corpus_path = os.path.join(os.getcwd(),'tests/test_corpus')
+
+patent_db = os.path.join(
+    os.getcwd(), 'data/patents/Patents.sqlite3')
+
 
 test_text='''
 The titular threat of The Blob has always struck me as the ultimate movie
@@ -28,14 +33,14 @@ class ObjectGeneratorTest(unittest.TestCase):
     def setUp(self):
         self.object = ObjectGenerator(test_corpus_path,{})
         self.object.corpus.append(test_text)
-        self.object.add_patent_data_to_corpus(2, random=True)
+        self.patents=PatentCorpus(patent_db).get_records(2, random=True)
 
     def test_add_patent_data_to_corpus(self):
-        self.object.add_patent_data_to_corpus(2, random=True)
-        self.assertTrue(len(self.object.corpus)==5)
+        for p in self.patents:
+            self.object.add_to_corpus(p)
+        self.assertTrue(len(self.object.corpus)==3)
 
     def test_generate_corpus_files(self):
-        
         self.object.generate_corpus_files()
         self.assertTrue(os.path.isdir(test_corpus_path)==True)
 
