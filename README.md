@@ -24,6 +24,11 @@ Patent data comes from the [Fung Institute](https://github.com/funginstitute/dow
     # build data
     python parse_data.py
 
+Wikipedia data use the [Wiki Crawl](https://github.com/guokr/wikicrawl) project to extract articles by categories. 
+
+* It is a clojure project, so you should use ``leiningen``. 
+* Change the [app.clj](https://github.com/guokr/wikicrawl/blob/master/src/wikicrawl/app.clj) according to your settings
+* ``lein run`` in your terminal
 
 ## Tests
 You will need nosetest
