@@ -1,3 +1,7 @@
+
+    WORK IN PROGRESS
+    Not ready to use Yet
+    
 # Junkware
 
 A NLG patent-based object generator created for an art project.
