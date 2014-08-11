@@ -7,6 +7,7 @@ import networkx as nx
 from utils import nx_to_gv_file, nx_to_gephi_csv, slugify
 from random import choice, randint
 import sqlite3
+import codecs
 
 
 # some characters to avoid
@@ -106,13 +107,13 @@ class WikiCorpus(object):
         for myfile in os.listdir(self.categories[node]["path"]):
             if myfile.endswith(".txt"):
                 path=os.path.join(self.categories[node]["path"], myfile)
-                with open (path, "r") as myfile:
+                with codecs.open (path, "r", "utf-8") as myfile:
                     text=myfile.read().replace('\n', '')
-                    texts.append(text)
+                    texts.append(text.encode("utf-8"))
         return texts
 
     def get_random_texts(self):
-        """ retrieve a set of texts based on 2 random  categories"
+        """ retrieve a set of texts based on 2 random categories"
         """
         texts=[]
         nodes=self.get_random_nodes()

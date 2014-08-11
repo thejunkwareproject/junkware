@@ -5,6 +5,12 @@ from nltk.corpus.reader.plaintext import PlaintextCorpusReader
 import bard
 import os
 import shutil
+import codecs
+from lib.nlp import NLP
+import sys  
+
+reload(sys)  
+sys.setdefaultencoding('utf8')
 
 class ObjectGenerator(object):
 
@@ -18,17 +24,20 @@ class ObjectGenerator(object):
         self.corpusdir = _corpusdir
         self.properties = _objects_properties
         self.corpus = []
+        
+        if self.properties != {} :
+            if self.properties["keep"] == False:
+                # remove old dir if it already exists
+                if os.path.isdir(self.corpusdir):
+                    shutil.rmtree(self.corpusdir)
 
-        # remove old dir if it already exists
-        if os.path.isdir(self.corpusdir):
-            shutil.rmtree(self.corpusdir)
-
-    def add_to_corpus(self,text):
+    def add_to_corpus(self, text):
         if(type(text) is not str):
             raise TypeError("Corpus should be a text.")
-        # print text
-        self.corpus.append(text)
-
+        txt=NLP(text)
+        clean=txt.get_clean_text()
+        # print clean
+        self.corpus.append(clean)
 
     def generate_corpus_files(self):
 
@@ -42,15 +51,14 @@ class ObjectGenerator(object):
         filename = 0
         for text in self.corpus:
             filename += 1
-            # print filename
-            with open(os.path.join(self.corpusdir, str(filename) + '.txt'), 'w') as fout:
+            with codecs.open(os.path.join(self.corpusdir, str(filename) + '.txt'), 'w','utf-8') as fout:
                 print>>fout, text
         return
 
     def load_corpus(self):
 
-        if len(self.corpus) == 0:
-            raise Exception('No corpus defined.')
+        # if len(self.corpus) == 0:
+        #     raise Exception('No corpus defined.')
 
         if os.path.isdir(self.corpusdir) is False:
             self.generate_corpus_files()
