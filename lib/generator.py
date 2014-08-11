@@ -26,11 +26,13 @@ class ObjectGenerator(object):
     def add_to_corpus(self,text):
         if(type(text) is not str):
             raise TypeError("Corpus should be a text.")
+        # print text
         self.corpus.append(text)
 
-        self.corpus
 
     def generate_corpus_files(self):
+
+        print "len(self.corpus)", len(self.corpus)
 
         # Make new dir for the corpus.
         if not os.path.isdir(self.corpusdir):
@@ -40,9 +42,10 @@ class ObjectGenerator(object):
         filename = 0
         for text in self.corpus:
             filename += 1
+            # print filename
             with open(os.path.join(self.corpusdir, str(filename) + '.txt'), 'w') as fout:
                 print>>fout, text
-                return
+        return
 
     def load_corpus(self):
 
