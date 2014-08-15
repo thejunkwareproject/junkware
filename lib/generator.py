@@ -19,17 +19,15 @@ class ObjectGenerator(object):
 
     '''
 
-    def __init__(self, _corpusdir, _objects_properties, *args, **kwargs):
+    def __init__(self, _corpusdir, keep=False, *args, **kwargs):
 
         self.corpusdir = _corpusdir
-        self.properties = _objects_properties
         self.corpus = []
-        
-        if self.properties != {} :
-            if self.properties["keep"] == False:
-                # remove old dir if it already exists
-                if os.path.isdir(self.corpusdir):
-                    shutil.rmtree(self.corpusdir)
+
+        if keep is False:
+            # remove old dir if it already exists
+            if os.path.isdir(self.corpusdir):
+                shutil.rmtree(self.corpusdir)
 
     def add_to_corpus(self, text):
         if(type(text) is not str):
@@ -68,7 +66,7 @@ class ObjectGenerator(object):
         bard.sents = newcorpus.sents
         bard.tokens = newcorpus.words()
 
-        print 'init markov NLG text generator'
+        # print 'init markov NLG text generator'
         self.generator = bard.generators.markov.IntelligentMarkovGenerator(
             bard.tokens)
 
@@ -87,4 +85,5 @@ class ObjectGenerator(object):
                 definition += str(e) + " "  # definition to str
             # print definition
             defs.append(definition)
-        return defs
+
+        return " ".join([d for d in defs])

@@ -11,39 +11,40 @@ import sys
 reload(sys)  
 sys.setdefaultencoding('utf8')
 
-# # init patents db
-# patents=PatentCorpus('./data/patents/Patents.sqlite3')
+# init patents db
+patents=PatentCorpus('./data/patents/Patents.sqlite3')
 
-# # Generate Wikipedia category graph
-# wiki_en=WikiCorpus('./data/wikipedia',"en")
-# wiki_en.create_wiki_graph()
+# Generate Wikipedia category graph
+wiki_en=WikiCorpus('./data/wikipedia',"en")
+wiki_en.create_wiki_graph()
 
 # # # Create an object
 test_corpus_path = os.path.join(os.getcwd(), 'data/corpus')
-weird_object = ObjectGenerator(test_corpus_path, {"keep":True})
+weird_object = ObjectGenerator(test_corpus_path)
 
-# # add random records from patents db
-# for patent in patents.get_records(10, random=True):
-#     weird_object.add_to_corpus(patent)
+# add random records from patents db
+for patent in patents.get_records(10, random=True):
+    weird_object.add_to_corpus(patent)
 
-# # add a few random articles from wikipedia
-# for article in wiki_en.get_random_texts():
-#     print "wk article"
-#     weird_object.add_to_corpus(article)
+# add a few random articles from wikipedia
+for article in wiki_en.get_random_texts():
+    print "wk article"
+    weird_object.add_to_corpus(article)
 
-# print wiki_en.selected
+print wiki_en.selected
 
-# print
-# print wiki_en.selected
+print
+print wiki_en.selected
 
 
 # create corpus
 weird_object.load_corpus()
 
 # print "weird_object",len(weird_object.corpus)
-descriptions = weird_object.generate_definition(10, 20)
+descriptions = weird_object.generate_definition(3, 15)
 
-print descriptions[0]
+print descriptions
+
 
 # NLP
 

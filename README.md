@@ -18,21 +18,7 @@ A NLG patent-based object generator created for an art project.
 
 ## Data
 
-Patent data comes from the [Fung Institute](https://github.com/funginstitute/downloads) at UC Berkeley
-
-    mkdir data && cd data
-    # wget https://s3.amazonaws.com/fungpat_olddata/patdesc.sqlite3
-    wget https://s3.amazonaws.com/fungpat_olddata/patent.sqlite3
-    # wget https://s3.amazonaws.com/fungpat_olddata/class.sqlite3
-
-    # build data
-    python parse_data.py
-
-Wikipedia data use the [Wiki Crawl](https://github.com/guokr/wikicrawl) project to extract articles by categories. 
-
-* It is a clojure project, so you should use ``leiningen``. 
-* Change the [app.clj](https://github.com/guokr/wikicrawl/blob/master/src/wikicrawl/app.clj) according to your settings
-* ``lein run`` in your terminal
+Data Sets are available on the [junkware-data](https://github.com/clemsos/junkware-data) rrep
 
 ## Tests
 You will need nosetest
