@@ -7,10 +7,11 @@ import os
 import shutil
 import codecs
 from lib.nlp import NLP
-import sys  
+import sys
 
-reload(sys)  
+reload(sys)
 sys.setdefaultencoding('utf8')
+
 
 class ObjectGenerator(object):
 
@@ -32,8 +33,8 @@ class ObjectGenerator(object):
     def add_to_corpus(self, text):
         if(type(text) is not str):
             raise TypeError("Corpus should be a text.")
-        txt=NLP(text)
-        clean=txt.get_clean_text()
+        txt = NLP(text)
+        clean = txt.get_clean_text()
         # print clean
         self.corpus.append(clean)
 
@@ -49,7 +50,7 @@ class ObjectGenerator(object):
         filename = 0
         for text in self.corpus:
             filename += 1
-            with codecs.open(os.path.join(self.corpusdir, str(filename) + '.txt'), 'w','utf-8') as fout:
+            with codecs.open(os.path.join(self.corpusdir, str(filename) + '.txt'), 'w', 'utf-8') as fout:
                 print>>fout, text
         return
 

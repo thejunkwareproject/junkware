@@ -1,3 +1,4 @@
+venv
 data
 oldies
 data/*/
@@ -5,7 +6,6 @@ out
 .ipynb_checkpoints
 _data
 inspiration
-ui
 
 
 # Byte-compiled / optimized / DLL files
