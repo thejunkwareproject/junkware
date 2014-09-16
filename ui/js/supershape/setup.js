@@ -1,5 +1,5 @@
 	function initApp(){
-	    SCREEN_WIDTH = window.innerWidth;
+	    SCREEN_WIDTH = window.innerWidth*0.7;
     	SCREEN_HEIGHT = window.innerHeight;
 		setup();
         postprocessingApp();

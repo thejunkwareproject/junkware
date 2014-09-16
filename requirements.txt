@@ -11,3 +11,5 @@ itsdangerous==0.23
 ujson==1.33
 redis==2.10.3
 pybluez==0.20
+Flask-RESTful==0.1
+Flask-PyMongo==0.3

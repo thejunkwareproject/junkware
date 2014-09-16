@@ -28,7 +28,7 @@ body {
 #main {
     color: #00CC00;
     
-    width:60%;
+    width:70%;
     float:left;
 
 }
@@ -36,8 +36,32 @@ body {
 #sidebar {
     color: #00CC00;
     
-    width:40%;
+    width:30%;
     float:left;
+}
+
+.bar {
+  fill: #00CC00;
+}
+
+.bar:hover {
+  fill: brown;
+}
+
+.axis {
+  fill: #00CC00;
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #00CC00;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  /*display: none;*/
 }
 
 /*

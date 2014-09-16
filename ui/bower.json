@@ -20,7 +20,8 @@
     "colorbrewer":"latest",
     "cubism":"latest",
     "threejs":"latest",
-    "threex" : "latest"
+    "threex" : "latest",
+    "rickshaw":"latest"
 
   }
 }
