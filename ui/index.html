@@ -20,6 +20,7 @@
 <body>
     <div id="main">
         main
+        <div id="description"></div>
         <div id="supershapes"></div>
     </div>
     <div id="sidebar">
@@ -47,7 +48,12 @@
         var socket = io.connect(url);
 
         socket.on('connect', function() {
-            socket.emit('my event', {data: 'I\'m connected!'});
+            socket.emit('getdesc', {data: 'I\'m connected!'});
+        });
+
+        socket.on('description', function(data) {
+            console.log(data);
+            $("#description").text(data);
         });
 
         var seriesData;

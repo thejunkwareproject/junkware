@@ -56,23 +56,22 @@ class ObjectGenerator(object):
 
     def load_corpus(self):
 
-        # if len(self.corpus) == 0:
-        #     raise Exception('No corpus defined.')
+        if len(self.corpus) == 0:
+            raise Exception('No corpus defined.')
 
         if os.path.isdir(self.corpusdir) is False:
             self.generate_corpus_files()
 
         newcorpus = PlaintextCorpusReader(self.corpusdir, '.*')
 
-        bard.sents = newcorpus.sents
+        # bard.sents = newcorpus.sents
         bard.tokens = newcorpus.words()
+        print len(bard.tokens)
 
         # print 'init markov NLG text generator'
-        self.generator = bard.generators.markov.IntelligentMarkovGenerator(
-            bard.tokens)
+        self.generator = bard.generators.markov.IntelligentMarkovGenerator(bard.tokens)
 
     def generate_definition(self, _nb_sentences, _word_count):
-
         try:
             self.generator
         except Exception, e:

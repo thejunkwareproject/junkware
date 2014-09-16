@@ -19,6 +19,7 @@ Start
 Then you need to install the dependencies:
 
     (venv) $ pip install -r requirements.txt
+    (venv) $ pip install git+git://github.com/zacharydenton/bard#egg=bard
 
 Run the data acquisition:
 
