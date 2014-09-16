@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title> - jsFiddle demo by makoto</title>
+  
+  <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
+  
+  <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+  
+  
+  
+  <script type='text/javascript' src="http://d3js.org/d3.v2.js"></script>
+  
+  
+  <style type='text/css'>
+    .chart rect {
+        background-color: steelblue;
+        text-align: right;
+        padding: 3px;
+        margin 1px;
+        color: white;
+    }
+
+    .chart rect {
+        stroke: white;
+        fill: steelblue;
+    }
+
+    .chart text {
+        fill: #ccc;
+        font: 10px monospace;
+    }
+
+    text.rule {
+        fill:black;
+    }
+
+    .chart {
+        border: 1px solid black;
+    }
+</style>
+
+
+
+<script type='text/javascript'>//<![CDATA[ 
+    $(window).load(function(){
+       var useData = [1,2,3,5,8,13,21,34,55,89];
+            //chart.attr("height", 20 * useData.length);    
+            var chart = d3.select("body")
+            .append("svg:svg")
+            .attr("class", "chart")
+            .attr("width", 420)
+            .attr("height", 200);
+
+            var interval = 1000;
+
+
+            var draw = function(data){        
+            // Set the width relative to max data value
+            var x = d3.scale.linear()
+            .domain([0, d3.max(data)])
+            .range([0, 420]);
+
+            var y = d3.scale.ordinal()
+            .domain(data)
+            .rangeBands([0, 120]);
+
+            var rect = chart.selectAll("rect")
+            .data(data)
+
+             // enter rect
+             rect.enter().append("svg:rect")
+             .attr("y", y)
+             .attr("width", x)
+             .attr("height", y.rangeBand());
+             
+             // update rect            
+             rect.transition().duration(interval)
+             .attr("y", y)
+             .attr("width", x)
+             
+             var text = chart.selectAll("text")
+             .data(data)
+
+            // enter text
+            text.enter().append("svg:text")
+            .attr("x", x)
+            .attr("y", function (d) { return y(d) + y.rangeBand() / 2; })
+                 .attr("dx", -3) // padding-right
+                 .attr("dy", ".35em") // vertical-align: middle
+                 .attr("text-anchor", "end") // text-align: right
+                 .text(String);
+                 
+             // update text
+             text.transition().duration(interval)
+             .attr("x", x)
+             .text(String);
+         } 
+         
+         setInterval(function(){
+           var data = useData.map(function(d){return Math.random()})  
+           console.log(data[0]);                
+           draw(data);
+       }, interval)
+});//]]>  
+
+</script>
+
+
+</head>
+<body>
+  
+  
+</body>
+
+
+</html>
