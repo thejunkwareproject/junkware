@@ -14,8 +14,8 @@ sys.setdefaultencoding('utf8')
 # init patents db
 patents=PatentCorpus('../junkware-data/patents/Patents.sqlite3')
 
-# # Generate Wikipedia category graph
-# wiki_en=WikiCorpus('./data/wikipedia',"en")
+# Generate Wikipedia category graph
+wiki_en=WikiCorpus('../junkware-data/wikipedia',"en")
 # wiki_en.create_wiki_graph()
 
 # # # Create an object
@@ -24,13 +24,17 @@ weird_object = ObjectGenerator(test_corpus_path)
 
 # add random records from patents db
 for patent in patents.get_records(10, random=True):
-    weird_object.add_to_corpus(patent)
+    print "patent added"
+    # weird_object.add_to_corpus(patent)
 
-# # add a few random articles from wikipedia
-# for article in wiki_en.get_random_texts():
-#     print "wk article"
-#     weird_object.add_to_corpus(article)
+# add a few random articles from wikipedia
+for article in wiki_en.get_random_texts():
+    print "wk article added"
+    print article
+    weird_object.add_to_corpus(article)
+    print 
 
+print "-"*20
 # print wiki_en.selected
 
 # print
@@ -39,11 +43,13 @@ for patent in patents.get_records(10, random=True):
 
 # create corpus
 weird_object.load_corpus()
-
 print "weird_object",len(weird_object.corpus)
-descriptions = weird_object.generate_definition(3, 15)
 
-# print descriptions
+for i in range(0,10):
+    descriptions = weird_object.generate_definition(3, 15)
+    for letter in descriptions:
+        print letter.decode("utf8")
+    print 
 
 
 # NLP

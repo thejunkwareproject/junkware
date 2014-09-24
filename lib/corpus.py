@@ -8,7 +8,9 @@ from utils import nx_to_gv_file, nx_to_gephi_csv, slugify
 from random import choice, randint
 import sqlite3
 import codecs
+import pickle
 
+from nlp import NLP
 
 # some characters to avoid
 stopwords = ["(", ")", "/"]
@@ -25,8 +27,16 @@ class WikiCorpus(object):
         self.wk_path = os.path.join(corpusdir, language)
         self.out_path = os.path.join(corpusdir, "out")
         print self.wk_path
-        self.categories = nx.Graph()
         self.selected=[]
+        
+        self.graph_path = os.path.join(self.wk_path,'graph.txt')
+        
+        if not os.path.isfile(self.graph_path):
+            self.categories = nx.Graph()
+            self.create_wiki_graph()
+        else:
+            print "load graph : %s"%self.graph_path
+            self.categories = pickle.load(open(self.graph_path))
 
     def create_wiki_graph(self):
         """ Create wiki graph representation of categories"""
@@ -44,8 +54,8 @@ class WikiCorpus(object):
             self.categories[here]["path"] = path
 
             for name in files:
-                if fnmatch(name, "*.yaml"):  # check if there is a text file
-
+                if fnmatch(name, "*.yaml") and "Index" not in name and "index" not in name:  # check if there is a text file
+                    
                     category_name = name[0:-5]
                     yaml_file_path = os.path.join(
                         path, category_name + ".yaml")
@@ -72,6 +82,12 @@ class WikiCorpus(object):
               % (self.categories.name,
                  nx.number_of_nodes(self.categories),
                  nx.number_of_edges(self.categories)))
+        for node in nx.nodes(self.categories):
+            self.get_corpus_from_node(node)
+
+        pickle.dump(self.categories, open(self.graph_path, 'w'))
+
+        print "Graph saved as %s"%(self.graph_path)
 
     def create_wiki_graphviz(self, path):
         ''' Visualize the wiki corpus with Graphviz '''
@@ -109,7 +125,8 @@ class WikiCorpus(object):
                 path=os.path.join(self.categories[node]["path"], myfile)
                 with codecs.open (path, "r", "utf-8") as myfile:
                     text=myfile.read().replace('\n', '')
-                    texts.append(text.encode("utf-8"))
+                    result=NLP(text).get_clean_text()
+                    texts.append(result.encode("utf-8"))
         return texts
 
     def get_random_texts(self):

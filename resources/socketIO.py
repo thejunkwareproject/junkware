@@ -6,21 +6,10 @@ monkey.patch_all()
 
 from flask import render_template,session
 from flask.ext.socketio import SocketIO, emit
-from service import app, api, mongo
+
+from resources import app
 
 socketio = SocketIO(app)
-
-
-# @app.route('/junkware')
-# def index():
-
-#     global thread
-#     if thread is None:
-#         print 'start thread'
-#         thread = Thread(target=background_thread)
-#         thread.start()
-
-#     return render_template('index.html')
 
 # sockets
 @socketio.on('my event', namespace='')

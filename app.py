@@ -1,5 +1,5 @@
-from service import app
-from service.socketIO import socketio, emit
+from resources import app
+from resources.socketIO import socketio, emit
 from threading import Thread
 from lib.queue import RedisQueue
 from flask import render_template
@@ -25,10 +25,12 @@ def background_data_thread():
     count = 0
 
     while True:
+        print count
         time.sleep(1)
         count += 1
         point = q.get()
         point = ast.literal_eval(point)
+        print point
 
         # print EEG_series
         print "new point"

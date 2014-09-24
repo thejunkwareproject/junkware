@@ -62,3 +62,9 @@ You will need nosetest
     chmod +x run_tests.sh
     ./run_tests.sh          # run all tests
     ./run_tests.sh xxx.py   # run a single test
+
+
+## INstall on Raspberry Pi
+
+    nmap -p 22 --open -sV 192.168.1.0/24
+    sudo  mount -t vfat -o loop,offset=4194304 /dev/mmcblk0p1 /media/usb

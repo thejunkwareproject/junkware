@@ -33,4 +33,4 @@ DEFAULT_REPRESENTATIONS = {'application/json': output_json}
 api = restful.Api(app)
 api.representations = DEFAULT_REPRESENTATIONS
 
-import service.resources
+import resources.routes

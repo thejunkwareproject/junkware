@@ -123,15 +123,15 @@
         var svg,x,y,width,height,margin;
 
         socket.on('brain', function(data) {
-            
+            console.log(data);
             var brainValues=[
                 {
                     "name": "attention",
-                    "value": Math.random()*200//data.point.attention
+                    "value": data.point.attention // Math.random()*200//
                 },
                 {
                     "name" : "meditation",
-                    "value": Math.random()*200// data.point.meditation
+                    "value": data.point.meditation // Math.random()*200// 
                 }
             ];
 
