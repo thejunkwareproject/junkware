@@ -1,0 +1,27 @@
+{
+  "name": "junkware",
+  "version": "0.0.1",
+  "authors": [
+    "Clément Renaud <clement.renaud@gmail.com>"
+  ],
+  "description": "Weird stuff with three.js and d3 :)",
+  "main": "index.html",
+  "keywords": [
+    "three.js",
+    "supershape",
+    "supershape"
+  ],
+  "license": "Apache 2.0",
+  "private": true,
+  "dependencies": {
+    "d3": "3",
+    "d3-tip": "latest",
+    "colorbrewer":"latest",
+    "threejs":"latest",
+    "rickshaw":"latest",
+    "bootstrap":"latest",
+    "socket.io-client": "0.9.16",
+    "dat.gui":"latest",
+    "stats.js":"latest"
+  }
+}

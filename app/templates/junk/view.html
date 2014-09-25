@@ -1,0 +1,37 @@
+{% extends "dashboard_layout.html" %}
+
+{% block content %}
+<div id="main">
+    main
+    <p class="objectId">#{{ objectId }}</p>
+    <div id="description"></div>
+    <div id="supershapes"></div>
+</div>
+<div id="sidebar">
+    sidebar
+    <div class="info">
+    <div id="eeg"></div>
+    <div id="brain-values"></div>
+</div>
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="/css/dashboard.css">
+{% endblock %}
+
+{% block scripts %}
+<script src="/libs/d3/d3.min.js"></script>
+<script src="/libs/rickshaw/rickshaw.min.js"></script>
+<script src="/libs/socket.io-client/dist/socket.io.min.js"></script>
+<script src="/js/dashboard.js"></script>
+<script src="/libs/stats.js/build/stats.min.js"></script>
+<script src="/libs/dat.gui/dat.gui.min.js"></script>
+
+<script src="/libs/threejs/build/three.min.js"></script>
+<script src="/js/orbitControls.js"></script>
+<!-- <script src="/js/super3D.js"></script> -->
+<script src="/js/super3D.js"></script>
+<script src="/js/init.js"></script>
+{{super()}}
+{% endblock %}

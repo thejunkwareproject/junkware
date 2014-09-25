@@ -1,0 +1,165 @@
+@font-face {
+    font-family: 'Oxygen Mono2';
+    src: url('OxygenMono-Regular-webfont.eot'), 
+        url('fonts/OxygenMono-Regular-webfont.woff') format('woff'), 
+        url('fonts/OxygenMono-Regular-webfont.ttf') format('truetype'),
+        url('fonts/OxygenMono-Regular-webfont.otf') format('opentype'),
+        url('fonts/OxygenMono-Regular-webfont.svg#Oxygen Mono2') format('svg');
+}
+    
+body {
+    /*zoom:35%;*/
+    background-color: rgba(0,0,0,1); 
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    line-height: 1em;
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+    font-family: 'Oxygen Mono', 'Oxygen Mono2', Monaco, Menlo, Andale, Arial, sans-serif;
+    text-align: left;
+    font-size: 11px;
+    font-weight: light;
+    overflow: hidden;
+}
+
+#main {
+    color: #00CC00;
+    
+    width:70%;
+    float:left;
+
+}
+
+#sidebar {
+    color: #00CC00;
+    
+    width:30%;
+    float:left;
+}
+
+.bar {
+  fill: #00CC00;
+}
+
+.bar:hover {
+  fill: brown;
+}
+
+.axis {
+  fill: #00CC00;
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #00CC00;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  /*display: none;*/
+}
+
+.objectId{
+    color: #ff0000;
+    margin-right:10px;
+}
+
+/*
+#device{
+    background-color: #000000; 
+    position: absolute;
+    z-index:1;
+    width: -moz-calc(100% - 20px);
+    width: -webkit-calc(100% - 20px);
+    width: calc(100% - 20px);
+    top: 7px;
+    left: 10px;
+    color: #00CC00;
+    text-decoration:;
+    height: 77px;
+    padding-bottom: 0px;
+    border-bottom: 11px solid #000;
+    z-index: 1;
+}
+*/
+
+#container{
+    position: absolute;
+    margin:0;
+    padding:0;
+    /*padding-top: 77px;*/
+    left: 10px;
+    right: 10px;
+    top: 0px;
+    bottom: 0px;
+    overflow: hidden;
+    z-index: 1;
+}
+
+
+#content{
+    position: absolute;
+    margin:0;
+    padding:0;
+    width:100%;
+    background: #00ffff;
+    color: #00CC00;
+    top: 10px;
+    z-index: 1;
+}
+
+
+#terminal {
+    width:50%;
+}
+
+#terminal-container {
+    height:50%;
+}
+
+#curtains {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: url(../img/curtains.png) repeat top left;
+    z-index: 100;
+    opacity: 0.69;
+    background-color: black;
+}
+
+.message{
+    margin: 0;
+    padding: 0;
+}
+
+
+
+p{
+    margin:0;
+    padding:0;
+    display: inline;
+    font-weight: lighter;
+}
+
+img{
+    background-color: #dd0000; 
+    position: inherit;
+    margin:0;
+    padding:0;
+    margin-bottom:-3px;
+    margin-right: 5px;
+    margin-left:2px;
+    display: inline-block;
+    /*height: 28px;*/
+    height: 77px;
+    border-left: 3px solid #d00;
+}
+
+.blink {
+    visibility: visible;
+}
