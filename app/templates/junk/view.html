@@ -2,16 +2,25 @@
 
 {% block content %}
 <div id="main">
-    main
-    <p class="objectId">#{{ objectId }}</p>
+    <div id="header">
+        <p class="objectId">#{{ objectId }}</p>
+    </div>
     <div id="description"></div>
     <div id="supershapes"></div>
+    <div id="three-axis"></div>
+
 </div>
 <div id="sidebar">
-    sidebar
-    <div class="info">
-    <div id="eeg"></div>
-    <div id="brain-values"></div>
+    <div class="info"></div>
+    <div id="eeg">
+        <h4>Electro-Encephalo Graph (EEG) </h4>
+    </div>
+    <div id="brain-values">
+        <h4>Neuronal Monitor</h4>
+    </div>
+    <div id="molecules">
+        <h4>Chemical Profiling</h4>
+    </div>
 </div>
 {% endblock %}
 
@@ -29,9 +38,13 @@
 <script src="/libs/dat.gui/dat.gui.min.js"></script>
 
 <script src="/libs/threejs/build/three.min.js"></script>
-<script src="/js/orbitControls.js"></script>
+<!-- <script src="/js/orbitControls.js"></script> -->
+<script src="/js/trackbackControls.js"></script>
 <!-- <script src="/js/super3D.js"></script> -->
 <script src="/js/super3D.js"></script>
+<script src="/js/CSS3DRenderer.js"></script>
+<script src="/js/PDBLoader.js"></script>
+<script src="/js/molecules.js"></script>
 <script src="/js/init.js"></script>
 {{super()}}
 {% endblock %}

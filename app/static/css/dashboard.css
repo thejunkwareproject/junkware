@@ -6,7 +6,60 @@
         url('fonts/OxygenMono-Regular-webfont.otf') format('opentype'),
         url('fonts/OxygenMono-Regular-webfont.svg#Oxygen Mono2') format('svg');
 }
-    
+
+/* RESET */
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* GENERAL & TYPO */
+
 body {
     /*zoom:35%;*/
     background-color: rgba(0,0,0,1); 
@@ -25,12 +78,42 @@ body {
     overflow: hidden;
 }
 
+/* typo */
+p{
+    margin:0;
+    padding:0;
+    display: inline;
+    font-weight: lighter;
+}
+
+h4 {
+    color : #fff;
+}
+
+p.objectId{
+    color: #ff0000;
+    margin-right:10px;
+}
+
+/* layout */
+
+#container{
+    position: absolute;
+    margin:0;
+    padding:0;
+    left: 10px;
+    right: 10px;
+    top: 0px;
+    bottom: 0px;
+    overflow: hidden;
+    z-index: 1;
+}
+
 #main {
     color: #00CC00;
     
     width:70%;
     float:left;
-
 }
 
 #sidebar {
@@ -39,6 +122,8 @@ body {
     width:30%;
     float:left;
 }
+
+/* components */
 
 .bar {
   fill: #00CC00;
@@ -64,102 +149,35 @@ body {
   /*display: none;*/
 }
 
-.objectId{
-    color: #ff0000;
-    margin-right:10px;
-}
 
-/*
-#device{
-    background-color: #000000; 
+
+#three-axis  {
+    width: 100px;
+    height: 100px;
+    background-color: transparent; 
+    border: none;
+    margin: 20px;
+    padding: 0px;
     position: absolute;
-    z-index:1;
-    width: -moz-calc(100% - 20px);
-    width: -webkit-calc(100% - 20px);
-    width: calc(100% - 20px);
-    top: 7px;
     left: 10px;
-    color: #00CC00;
-    text-decoration:;
-    height: 77px;
-    padding-bottom: 0px;
-    border-bottom: 11px solid #000;
-    z-index: 1;
-}
-*/
-
-#container{
-    position: absolute;
-    margin:0;
-    padding:0;
-    /*padding-top: 77px;*/
-    left: 10px;
-    right: 10px;
-    top: 0px;
-    bottom: 0px;
-    overflow: hidden;
-    z-index: 1;
-}
-
-
-#content{
-    position: absolute;
-    margin:0;
-    padding:0;
-    width:100%;
-    background: #00ffff;
-    color: #00CC00;
-    top: 10px;
-    z-index: 1;
-}
-
-
-#terminal {
-    width:50%;
-}
-
-#terminal-container {
-    height:50%;
-}
-
-#curtains {
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    background: url(../img/curtains.png) repeat top left;
+    bottom: 50px;
     z-index: 100;
-    opacity: 0.69;
-    background-color: black;
 }
 
-.message{
-    margin: 0;
-    padding: 0;
+#molecules  {
+    background-color: transparent;
+    border: none;
+    margin: 0px;
+    padding: 0px;
+    /*position: absolute;
+    right: 0px;
+    bottom: 100px;
+    z-index: 100;*/
 }
 
-
-
-p{
-    margin:0;
-    padding:0;
-    display: inline;
-    font-weight: lighter;
-}
-
-img{
-    background-color: #dd0000; 
-    position: inherit;
-    margin:0;
-    padding:0;
-    margin-bottom:-3px;
-    margin-right: 5px;
-    margin-left:2px;
-    display: inline-block;
-    /*height: 28px;*/
-    height: 77px;
-    border-left: 3px solid #d00;
-}
-
-.blink {
-    visibility: visible;
+.bond {
+    width: 5px;
+    height: 10px;
+    background: #eee;
+    display: block;
 }

@@ -104,8 +104,6 @@ lineObject.prototype.update = function () {
     scene.add(this.scene)
 };
 
-
-
 function particleObject(b, a) {
     this.rotX = b;
     this.rotY = a;
@@ -113,7 +111,6 @@ function particleObject(b, a) {
     this.createParticleObject();
     this.createParticleMaterial()
 }
-
 particleObject.prototype.getScene = function () {
     return this.scene;
 };
