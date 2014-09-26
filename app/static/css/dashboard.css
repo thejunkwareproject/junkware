@@ -7,78 +7,17 @@
         url('fonts/OxygenMono-Regular-webfont.svg#Oxygen Mono2') format('svg');
 }
 
-/* RESET */
-
-/* http://meyerweb.com/eric/tools/css/reset/ 
-   v2.0 | 20110126
-   License: none (public domain)
-*/
-
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-}
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-    display: block;
-}
-body {
-    line-height: 1;
-}
-ol, ul {
-    list-style: none;
-}
-blockquote, q {
-    quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-    content: '';
-    content: none;
-}
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-}
-
-/* GENERAL & TYPO */
-
-body {
-    /*zoom:35%;*/
-    background-color: rgba(0,0,0,1); 
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 100%;
-    height: 100%;
-    line-height: 1em;
-    padding: 0 0 0 0;
-    margin: 0 0 0 0;
-    font-family: 'Oxygen Mono', 'Oxygen Mono2', Monaco, Menlo, Andale, Arial, sans-serif;
-    text-align: left;
-    font-size: 11px;
-    font-weight: light;
-    overflow: hidden;
-}
 
 /* typo */
+h1.objectId{
+    color: #ff0000;
+    margin-right:10px;
+}
+
+h4 {
+    color : #fff;
+}
+
 p{
     margin:0;
     padding:0;
@@ -86,41 +25,13 @@ p{
     font-weight: lighter;
 }
 
-h4 {
-    color : #fff;
-}
-
-p.objectId{
-    color: #ff0000;
-    margin-right:10px;
-}
-
 /* layout */
 
-#container{
-    position: absolute;
-    margin:0;
-    padding:0;
-    left: 10px;
-    right: 10px;
-    top: 0px;
-    bottom: 0px;
-    overflow: hidden;
-    z-index: 1;
-}
-
-#main {
-    color: #00CC00;
-    
-    width:70%;
-    float:left;
-}
-
-#sidebar {
-    color: #00CC00;
-    
-    width:30%;
-    float:left;
+#dashboard-main {
+    font-family: 'Oxygen Mono', 'Oxygen Mono2', Monaco, Menlo, Andale, Arial, sans-serif;
+    text-align: left;
+    line-height: 1em;
+    font-weight: light;
 }
 
 /* components */
@@ -145,11 +56,9 @@ p.objectId{
   shape-rendering: crispEdges;
 }
 
-.x.axis path {
-  /*display: none;*/
-}
-
-
+/*.x.axis path {
+  display: none;
+}*/
 
 #three-axis  {
     width: 100px;
@@ -173,6 +82,8 @@ p.objectId{
     right: 0px;
     bottom: 100px;
     z-index: 100;*/
+    width: 100%;
+    height: 960px;
 }
 
 .bond {

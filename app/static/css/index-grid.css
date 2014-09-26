@@ -1,10 +1,12 @@
 @import url(http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css);
 .col-item
 {
-    border: 1px solid #E1E1E1;
+    border: 1px solid #fff;
     border-radius: 5px;
-    background: #FFF;
+    background: #000;
+    margin-bottom: 30px;
 }
+
 .col-item .photo img
 {
     margin: 0 auto;
@@ -13,19 +15,30 @@
 
 .col-item .info
 {
+    color :#00CC00;
     padding: 10px;
     border-radius: 0 0 5px 5px;
     margin-top: 1px;
 }
 
+/*
 .col-item:hover .info {
-    background-color: #F5F5DC;
+    background-color: rgba(256,256,256,.2);
+}
+*/
+
+.col-item a {
+    color: #fff;
+}
+
+.col-item h2 a {
+    color: #ff0000;
 }
 .col-item .price
 {
     /*width: 50%;*/
     float: left;
-    margin-top: 5px;
+    margin-top: 10px;
 }
 
 .col-item .price h5
@@ -36,7 +49,7 @@
 
 .price-text-color
 {
-    color: #219FD1;
+    color: #00CC00;
 }
 
 .col-item .info .rating
@@ -57,7 +70,7 @@
 
 .col-item .separator
 {
-    border-top: 1px solid #E1E1E1;
+    border-top: 1px solid #000;
 }
 
 .clear-left
@@ -97,8 +110,4 @@
 .controls
 {
     margin-top: 20px;
-}
-[data-slide="prev"]
-{
-    margin-right: 10px;
 }

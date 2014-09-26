@@ -4,10 +4,6 @@ var N_Y = Math.floor(Math.PI/step);
 var color = "0xffffff";
 var pSize=5, opac=1;
 
-var random = function(min, max){
-    return min + Math.random()*(max-min);
-};
-
 function pointCloudObject(b, a) {
     a1 = random(0, 2);
     a2 = random(0, 2);

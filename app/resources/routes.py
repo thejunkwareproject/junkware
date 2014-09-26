@@ -6,7 +6,11 @@ from Junk import Junk, JunkList
 
 # routes
 @app.route('/')
-def index():
+def home():
+    return render_template('home.html')
+
+@app.route('/junks')
+def junk_index():
     junks= [x for x in mongo.db.junks.find()]
     return render_template('index.html', junks=junks)
 
@@ -14,6 +18,9 @@ def index():
 def junk_new():
     return render_template('junk/create.html')
 
+@app.route('/junk/partials/molecule')
+def molecule():
+    return render_template('partials/molecule.html')
 
 @app.route('/data/molecules')
 def get_molecules_list():

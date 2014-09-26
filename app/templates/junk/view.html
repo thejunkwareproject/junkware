@@ -1,27 +1,39 @@
-{% extends "dashboard_layout.html" %}
+{% extends "layout.html" %}
 
 {% block content %}
-<div id="main">
-    <div id="header">
-        <p class="objectId">#{{ objectId }}</p>
+    <div id="dashboard-header row">
+        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+            <h1 class="objectId">#{{ objectId }}</h1>
+            <div id="description"></div>
+        </div>
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            <div id="sidebar">
+                <div class="btn-group-vertical">
+                    <a href="#molecules" class="btn btn-link">
+                        <i class="fa fa-leaf"></i> DNA Cytometry Flow
+                    </a>
+                    <a href="#eeg" class="btn btn-link">
+                        <i class="fa fa-headphones"></i> Brain Activity
+                    </a>
+                    <a href="#3d" class="btn btn-link">
+                        <i class="fa fa-meh-o"></i> Psycho Tests
+                    </a>
+                    <a href="#3d" class="btn btn-link">
+                        <i class="fa fa-question"></i> Object
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-    <div id="description"></div>
-    <div id="supershapes"></div>
-    <div id="three-axis"></div>
+    <div id="threed" class="frame">
+        <div id="supershapes"></div>
+        <div id="three-axis"></div>
+    </div>
+    <div id="dna" class="frame">
+        <h4>Flow Citometry</h4>
+        <iframe id="molecules" src="/junk/partials/molecule" frameborder="0"></iframe>
+    </div>
 
-</div>
-<div id="sidebar">
-    <div class="info"></div>
-    <div id="eeg">
-        <h4>Electro-Encephalo Graph (EEG) </h4>
-    </div>
-    <div id="brain-values">
-        <h4>Neuronal Monitor</h4>
-    </div>
-    <div id="molecules">
-        <h4>Chemical Profiling</h4>
-    </div>
-</div>
 {% endblock %}
 
 {% block styles %}
@@ -30,21 +42,24 @@
 {% endblock %}
 
 {% block scripts %}
+
 <script src="/libs/d3/d3.min.js"></script>
 <script src="/libs/rickshaw/rickshaw.min.js"></script>
 <script src="/libs/socket.io-client/dist/socket.io.min.js"></script>
 <script src="/js/dashboard.js"></script>
-<script src="/libs/stats.js/build/stats.min.js"></script>
-<script src="/libs/dat.gui/dat.gui.min.js"></script>
 
-<script src="/libs/threejs/build/three.min.js"></script>
+<!-- <script src="/libs/dat.gui/dat.gui.min.js"></script> -->
 <!-- <script src="/js/orbitControls.js"></script> -->
+
+<script src="/libs/stats.js/build/stats.min.js"></script>
+<script src="/libs/threejs/build/three.min.js"></script>
+
 <script src="/js/trackbackControls.js"></script>
-<!-- <script src="/js/super3D.js"></script> -->
 <script src="/js/super3D.js"></script>
-<script src="/js/CSS3DRenderer.js"></script>
-<script src="/js/PDBLoader.js"></script>
-<script src="/js/molecules.js"></script>
-<script src="/js/init.js"></script>
+<script src="/js/init.js"></script> 
+
+
+
+
 {{super()}}
 {% endblock %}

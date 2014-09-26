@@ -1,7 +1,5 @@
 {% extends "layout.html" %}
 {% block content %}
-
-
     <div class="row">
         {% for junk in junks %}
         <div class="col-sm-3">
@@ -11,35 +9,41 @@
                 </div>
                 <div class="info">
                     <div class="row">
-                        <h2><a href="/junk/{{junk._id }}">
-                        {{ junk }}
-                        </a></h2>
+                        <h2><small><a href="/junk/{{junk._id }}">
+                        #{{ junk._id }}
+                        </a></small></h2>
+
                         <div class="price col-md-6">
-                            <h5 class="price-text-color">
-                                $199.99</h5>
+                            <h4 class="price-text-color">
+                                $199.99
+                            </h4>
                         </div>
                         <div class="rating hidden-sm col-md-6">
-                            <i class="price-text-color fa fa-star"></i><i class="price-text-color fa fa-star">
-                            </i><i class="price-text-color fa fa-star"></i><i class="price-text-color fa fa-star">
-                            </i><i class="fa fa-star"></i>
+                            <i class="price-text-color fa fa-star"></i>
+                            <i class="price-text-color fa fa-star"></i>
+                            <i class="price-text-color fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
                         </div>
-                    </div>
-                    <div class="separator clear-left">
-                        <p class="btn-add">
-                            <i class="fa fa-shopping-cart"></i><a href="http://www.jquery2dotnet.com" class="hidden-sm">Add to cart</a></p>
-                        <p class="btn-details">
-                            <i class="fa fa-list"></i><a href="http://www.jquery2dotnet.com" class="hidden-sm">More details</a></p>
+                        <div class="separator clear-left">
+                            <p class="btn-add">
+                                <i class="fa fa-shopping-cart"></i><a href="#" class="add-junk-to-cart hidden-sm">Add to cart</a></p>
+                            <p class="btn-details">
+                                <i class="fa fa-list"></i><a href="/junk/{{junk._id }}" class="hidden-sm">More details</a></p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         {% endfor %}
     </div>
-
-
 {% endblock %}
 
 {% block styles %}
 {{super()}}
 <link rel="stylesheet" href="{{url_for('static', filename='css/index-grid.css')}}">
+
+<style>
+
+</style>
 {% endblock %}

@@ -196,9 +196,9 @@ function animate() {
     stats.update();
 }
 
-setInterval(function () {
-    objectHearthBeat(.01);
-}, 150)
+// setInterval(function () {
+//     objectHearthBeat(.01);
+// }, 150)
 
 initThree();
 initAxis();

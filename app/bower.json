@@ -22,6 +22,7 @@
     "bootstrap":"latest",
     "socket.io-client": "0.9.16",
     "dat.gui":"latest",
-    "stats.js":"latest"
+    "stats.js":"latest",
+    "font-awesome":"latest"
   }
 }
