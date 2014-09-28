@@ -1,0 +1,117 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container">
+
+<div class="intro-wrapper">
+    <div class="intro">
+        <div class="introduction">
+            <h3>DNA semantic bending</h3>
+            <h1>JUNKWARE <small>I/O</small></h1>
+            <div>
+                <!-- <span class="intro-line"></span> -->
+
+                <span>
+                    "We are the eternal return of the enslaved stock under its new name, <em>junkware</em>.
+                    <br/>
+                </span>
+                <span>
+                    We are the medium, the message and the code.<br />
+                </span>
+                <span>
+                    We are worth our code, not worth a rush."<br />
+                </span>
+                <span><i>Thierry Bardini, 2010</i></span>
+                <span class="intro-line"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+{% endblock %}
+
+{% block styles %}
+<style>
+
+body {
+    background:#000;
+}
+/* intro */
+.intro-wrapper {
+position: relative;
+}
+
+.intro {
+margin: 120px auto;
+}
+
+.intro h1 {
+font-family: 'BebasNeueRegular';
+font-size: 140px;
+font-weight: 100;
+font-style: normal;
+text-align: center;
+-webkit-font-smoothing: antialiased;
+color: #fff;
+margin: 15px 0 0 0;
+text-transform: none;
+}
+
+.introduction i {
+  font-size: 10pt;
+}
+
+.introduction h3, .introduction div {
+font-family: 'Roboto', sans-serif;
+font-size: 15px;
+line-height: 1.5;
+font-style: normal;
+font-weight: 400;
+letter-spacing: 1px;
+color: #fff;
+text-shadow: 1px 1px 2px #000;
+}
+
+.introduction h3 span, .introduction div span {
+/*display: inline-block;*/
+}
+
+.introduction h3 {
+margin: 0 auto;
+width: 400px;
+border-bottom: 1px solid #fff;
+padding: 0 0 15px 0;
+}
+
+.introduction span:hover, .introduction h1:hover {
+color: #00CC00;
+transition: color 0.5s;
+}
+
+.introduction span {
+  background-color:rgba(0,0,0,.7);
+} 
+
+.intro-line {
+width: 100px;
+height: 1px;
+background: #fff;
+margin: 5px 15px;
+}
+
+.intro-pages {
+margin-top: 0;
+}
+
+.intro-arrow {
+  color: #fff;
+}
+
+
+header.text p{
+  font-size: 1.2em;
+  text-align: justify;
+  padding: 0px 0 10px 0;
+}
+</style>
+{% endblock %}
