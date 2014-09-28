@@ -1,21 +1,44 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-    <title>Junkware</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-    <!-- <meta name="description" content="Supershape.js visualizes the 3D super formula with three.js." />
-    <meta name="keywords" content="supershape, superformula, three.js, supershape.js, generative design" /> -->
-    <link rel="canonical" href="http://junkware.io" />
-    <script type="text/javascript" src="/libs/jquery/dist/jquery.js"></script>
-    
-{% block styles %}
-{% endblock %}
-</head>
-<body id="container">
+{% extends "layout.html" %}
+
 {% block content %}
+<div id="dashboard-header row">
+    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+        <h1 class="objectId">#{{ objectId }}</h1>
+        <div id="description"></div>
+    </div>
+    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+        <div id="sidebar">
+            <div class="btn-group-vertical">
+                <a href="{{ objectId }}/molecules" class="btn btn-link">
+                    <i class="fa fa-leaf"></i> DNA
+                </a>
+                <a href="{{ objectId }}/eeg" class="btn btn-link">
+                    <i class="fa fa-headphones"></i> Brain
+                </a>
+                <a href="{{ objectId }}/molecule" class="btn btn-link">
+                    <i class="fa fa-meh-o"></i> Molecule
+                </a>
+                <a href="{{ objectId }}/3d" class="btn btn-link">
+                    <i class="fa fa-question"></i> 3D Shape
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    {% block junkview %}
+    {% endblock %} 
+</div>
 {% endblock %}    
-</body>
+
 {% block scripts %}
+<link rel="stylesheet" href="/css/dashboard.css">
+    {% block junkscripts %}
+    {% endblock %}
 {% endblock %}
-</html>
+
+{% block styles %}
+    {% block junkstyles %}
+    {% endblock %}
+{% endblock %}

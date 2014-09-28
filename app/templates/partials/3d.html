@@ -1,0 +1,38 @@
+{% extends "dashboard_layout.html" %}
+
+{% block junkview %}
+
+<a href="#" class="btn btn-default three-save">Save</a>
+<div id="threed" class="frame">
+    <div id="supershapes"></div>
+    <div id="three-axis"></div>
+</div>
+{% endblock %}
+
+{% block junkscripts %}
+<script src="/libs/stats.js/build/stats.min.js"></script>
+<script src="/libs/threejs/build/three.min.js"></script>
+<script src="/libs/threejs-exporters/exporters/MaterialExporter.js"></script>
+<script src="/libs/threejs-exporters/exporters/GeometryExporter.js"></script>
+
+<script src="/js/3d/trackbackControls.js"></script>
+<script src="/js/3d/super3D.js"></script>
+<script src="/js/3d/draw3DShape.js"></script> 
+<script>
+    $(".three-save").click(function (e) {
+        var materialExporter = new THREE.MaterialExporter();
+        var materialEx = materialExporter.parse(object.material);
+        // console.log(materialEx);
+
+        var geometryExporter = new THREE.GeometryExporter();
+        geometryEx=geometryExporter.parse(object.scene.geometry);
+        // console.log(JSON.stringify(geometryEx));
+        var shape = { "shape" : {
+                            "material" : materialEx,
+                            "geometry": geometryEx
+                        }
+                    };
+        $.post("/junk/")
+    })
+</script>
+{% endblock %}

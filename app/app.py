@@ -52,12 +52,12 @@ def stop_data_thread():
     print "stop data"
     thread.stop()
 
-@app.route('/junk/<objectId>')
-def junwkare(objectId):
-    global thread
-    if thread is None:
-        create_data_thread()
-    return render_template('junk/view.html', objectId=objectId)
+# @app.route('/junk/<objectId>')
+# def junwkare(objectId):
+#     global thread
+#     if thread is None:
+#         create_data_thread()
+#     return render_template('junk/view.html', objectId=objectId)
 
 def get_description():
     test_corpus_path = os.path.join(os.getcwd(), 'corpus')

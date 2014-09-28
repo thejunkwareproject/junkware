@@ -25,6 +25,16 @@ def partials(path):
     print path
     return render_template(os.path.join('partials',path+".html"))
 
+@app.route('/junk/<objectId>')
+def junwkare(objectId):
+    return render_template('junk/view.html', objectId=objectId)
+
+@app.route('/junk/<objectId>/<path:path>')
+def single_junk(objectId, path):
+    print path, objectId
+    return render_template(os.path.join('partials',path+".html"), objectId=objectId)
+
+# data
 @app.route('/data/dna')
 def get_dna():
     my_dna=get_random_dna()
@@ -51,6 +61,7 @@ def get_molecule(path):
 # API
 api.add_resource(JunkList, '/api/junks')
 api.add_resource(Junk, '/api/junk/<ObjectId:junk_id>')
+
 
 # STATIC
 @app.route('/js/<path:path>')

@@ -59,25 +59,25 @@ var initThree = function(){
 
         var spotLight = new THREE.SpotLight( 0xffffff );
         spotLight.shadowCameraVisible = false;
-        spotLight.castShadow = true;
+        // spotLight.castShadow = true;
 
-        spotLight.position.set( 100, 1000, 100 );
-        spotLight.target.position.set(0, 0, 0);
+        // spotLight.position.set( 100, 1000, 100 );
+        // // spotLight.target.position.set(0, 0, 0);
 
-        spotLight.shadowMapWidth = 104;
-        spotLight.shadowMapHeight = 102;
+        // spotLight.shadowMapWidth = 1000;
+        // spotLight.shadowMapHeight = 1000;
 
-        spotLight.shadowCameraNear = 450;; 
-        spotLight.shadowCameraFar = camera.far;
-        spotLight.shadowBias = 0.3;
+        // // spotLight.shadowCameraNear = 450;; 
+        // // spotLight.shadowCameraFar = camera.far;
+        // // spotLight.shadowBias = 0.3;
 
-        spotLight.shadowDarkness = 0.8;
-        scene.add(spotLight);
+        // spotLight.shadowDarkness = 0.8;
+        // scene.add(spotLight);
 
-        var spotLight2 = new THREE.SpotLight();
-        // spotLight2.castShadow = true;
-        spotLight2.position.set( -170, 330, 160 );
-        scene.add(spotLight2);
+        // var spotLight2 = new THREE.SpotLight();
+        // // spotLight2.castShadow = true;
+        // spotLight2.position.set( -170, 330, 160 );
+        // scene.add(spotLight2);
 
     // reference
 
