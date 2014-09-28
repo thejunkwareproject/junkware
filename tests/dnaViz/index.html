@@ -1,0 +1,66 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Electrophoresis Generator.D3</title>
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<style> svg {background-color: #000}</style>
+</head>
+<body>
+
+<div>
+    <input type="button" value="Load DNA" id="loadDNA"/>
+    <input type="button" value="Create SVG" id="createSVG"/>
+    <input type="button" value="Turn ON" id="subButton"/>
+    <input type="button" value="Reset" id="reset"/>
+</div>
+
+<p id="DNA_sequence"></p>
+<div class="dna"></div>
+
+
+<script src="electrophoresis.js"></script>
+<script>
+    // load DNA Sequence
+    var getSequence = function(_url, callback){
+        $.get(_url, function (data) {
+            // console.log(data);
+            callback(data);
+        })
+    }
+
+    getSequence("pcrii_seq.txt", function(data){
+        var dnaViewer = new DNAViewer(data, ".dna",960,500);
+        // console.log(data);
+        dnaViewer.cutSequences();
+        dnaViewer.createSvg();
+        dnaViewer.display()
+    })
+
+    $("#createSVG").on("click",this,function(){
+        dnaViewer.createSvg();
+    })
+
+    $("#loadDNA").on("click",this,function(){
+        getSequence("pcrii_seq.txt", function(data){
+            dnaViewer.DNA_seq = data;
+            // $("#DNA_sequence").text(DNA_seq);
+        })
+    })
+
+    $("#subButton").on("click",this,function(){
+        dnaViewer.cutSequences();
+        dnaViewer.display()
+    });
+
+    $("#reset").on("click",this,function() {
+        // console.log(dnaViewer);
+        dnaViewer.resetDisplay();
+    });
+
+
+
+</script>
+</body>
+</html>

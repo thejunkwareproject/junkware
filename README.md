@@ -85,6 +85,8 @@ You will need nosetest
     sudo apt-get install python-dev python-pip python-virtualenv
     
     # http://www.widriksson.com/install-mongodb-raspberrypi/
+    
+    mongo http://192.168.1.119:28017
 
     # domain name
     # http://www.howtogeek.com/167190/how-and-why-to-assign-the-.local-domain-to-your-raspberry-pi/
