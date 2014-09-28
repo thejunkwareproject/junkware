@@ -9,11 +9,15 @@
 
 
 /* typo */
-h1.objectId{
+.objectId{
+    /*text-align:right;*/
     color: #ff0000;
     margin-right:10px;
 }
 
+h2 {
+    color : #00cc00;
+}
 h4 {
     color : #fff;
 }
@@ -91,4 +95,8 @@ p{
     height: 10px;
     background: #eee;
     display: block;
+}
+
+.junk-description {
+    text-align:justify;
 }

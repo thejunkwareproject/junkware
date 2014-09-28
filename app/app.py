@@ -5,8 +5,7 @@ from lib.queue import RedisQueue
 from flask import render_template
 
 import os, sys, time, ast
-from lib.generator import ObjectGenerator
-from lib.nlp import NLP
+# from lib.generator import MarkovGenerator
 from lib.corpus import *
 
 # set encoding to UTF-8
@@ -59,29 +58,13 @@ def stop_data_thread():
 #         create_data_thread()
 #     return render_template('junk/view.html', objectId=objectId)
 
-def get_description():
-    test_corpus_path = os.path.join(os.getcwd(), 'corpus')
-    weird_object = ObjectGenerator(test_corpus_path)
+# @socketio.on('getdesc', namespace='')
+# def test_message(message):
 
-    # add random records from patents db
-    for patent in patents.get_records(10, random=True):
-        weird_object.add_to_corpus(patent)
+#     # Create an object
+#     desc = get_description()
 
-    # create corpus
-    weird_object.load_corpus()
-
-    # print "weird_object",len(weird_object.corpus)
-    descriptions = weird_object.generate_definition(1, 15)
-    return descriptions
-
-
-@socketio.on('getdesc', namespace='')
-def test_message(message):
-
-    # Create an object
-    desc = get_description()
-
-    socketio.emit("description", desc, namespace='')
+#     socketio.emit("description", desc, namespace='')
 
 #run app
 if __name__ == '__main__':

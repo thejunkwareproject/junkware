@@ -1,10 +1,9 @@
 {% extends "dashboard_layout.html" %}
 
 {% block junkview %}
-
+<h3 id="glmol01_pdbTitle"></h3>
 <div id="glmol01"></div>
 <div id="glmol01_src"></div>
-
 
 <div style="position: absolute; color: white; right: 10px; bottom: 10px; z-index: 99; background-color: rgba(0, 0, 0, 0.65);" class="radio">
   <label><input type="radio" name="glmol01_mouseMode" value="0" checked>Rotate</label>
@@ -18,7 +17,6 @@
   <p>Loading structure from server... It may take a while.</p>
 </div>
 
-<div id="glmol01_pdbTitle" style="position:absolute; color: white; background-color: rgba(0, 0, 0, 0.65); font-size:80%"></div>
 
 {% endblock %}
 
@@ -43,8 +41,24 @@
 
   var glmol01;  
 
-  getRandomMolecule(function(moleculeFile) {
-    var url = "/data/molecules/" + moleculeFile;
+  $.get("/api/junk/{{objectId}}/molecule", function (_moleculeFile) {
+    
+    console.  log(_moleculeFile);
+    if(_moleculeFile == undefined) {
+      getRandomMolecule(function(randomFile) {
+        // displayMolecule(randomFile);
+        console.log("get a random file");
+        displayMolecule(randomFile)
+      });
+    } else {
+      // console.log("display : "+ _moleculeFile);
+      displayMolecule(_moleculeFile.molecule)
+    }
+  })
+  
+
+  var displayMolecule = function (_moleculeFile) {
+    var url = "/data/molecules/" + _moleculeFile;
     $.get(url, function (data) {
       // console.log(data);
       glmol01 = new GLmol('glmol01', true);
@@ -53,7 +67,7 @@
       glmol01.loadMolecule();
       $('#loading').hide();
     })
-  });
+  }
 
 
 </script>
@@ -61,7 +75,7 @@
 
 {% block junkstyles %}
 <style>
- #glmol01 {width: 100%; height: 100%; background-color: black; position: absolute;}
+ #glmol01 {width: 960px; height: 600px; background-color: black;}
  
 .controller {position: absolute; width: 0px; right: 0px; top: 10%; 
     background-color: rgba(0, 0, 0, 0.65); color: white;}

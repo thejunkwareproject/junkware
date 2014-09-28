@@ -3,22 +3,20 @@ $(document).ready(function(){
 
     /* websockets */
 
-
-
     namespace = ''; // change to an empty string to use the global namespace
 
     var url ='http://' + document.domain + ':' + location.port + namespace;
 
     var socket = io.connect(url);
 
-    socket.on('connect', function() {
-        socket.emit('getdesc', {data: 'I\'m connected!'});
-    });
+    // socket.on('connect', function() {
+    //     socket.emit('getdesc', {data: 'I\'m connected!'});
+    // });
 
-    socket.on('description', function(data) {
-        console.log(data);
-        $("#description").text(data);
-    });
+    // socket.on('description', function(data) {
+    //     console.log(data);
+    //     $("#description").text(data);
+    // });
 
     var seriesData;
     var palette = new Rickshaw.Color.Palette( { scheme: 'classic9' } );

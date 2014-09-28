@@ -1677,7 +1677,7 @@ GLmol.prototype.enableMouse = function() {
       } else if (ev.originalEvent.wheelDelta) { // Firefox
          me.rotationGroup.position.z -= scaleFactor * ev.originalEvent.wheelDelta / 400;
       }
-      console.log(ev.originalEvent.wheelDelta, ev.originalEvent.detail, me.rotationGroup.position.z);
+      // console.log(ev.originalEvent.wheelDelta, ev.originalEvent.detail, me.rotationGroup.position.z);
       me.show();
    });
    glDOM.bind("contextmenu", function(ev) {ev.preventDefault();});

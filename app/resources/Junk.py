@@ -1,6 +1,7 @@
 import os, time
 import json
 from threading import Thread
+import random
 
 from gevent import monkey
 monkey.patch_all()
@@ -15,6 +16,11 @@ from resources import app, api, mongo
 from bson.objectid import ObjectId
 from lib.queue import RedisQueue
 
+from lib.corpus import *
+from lib.generator import MarkovGenerator
+
+# init patents db
+patents=PatentCorpus('../../junkware-data/patents/Patents.sqlite3')
 
 # socketio = SocketIO(app)
 thread = None
@@ -46,9 +52,29 @@ class JunkList(restful.Resource):
         args = self.parser.parse_args()
         print args
 
+        # add DNA
         if not args['dna']:
             abort(400)
 
+        # add molecule
+        files=os.listdir("../../junkware-data/molecules")
+        molecules=[mol for mol in files if mol[-4:][:3]=="pdb"]
+        molecule = random.choice(molecules)
+        print molecule
+        args["molecule"]=molecule
+
+        # add patents corpus
+        pats = patents.get_records(10, random=True)
+        pats_ids=pats[0]
+        args["patents_ids"]=pats_ids
+
+        # create a title
+            # title
+        titles=""
+        for t in pats[2]:
+            titles += " "+t
+
+        args['title']= MarkovGenerator(titles).generate_text(size=random.randint(4,7)).title()
+
         junk_id =  mongo.db.junks.insert(args)
-        print junk_id
         return mongo.db.junks.find_one({"_id": junk_id})

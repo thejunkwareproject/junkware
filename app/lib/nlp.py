@@ -131,7 +131,7 @@ class NLP(object):
                 adj.append(str(word))
         return adj
 
-# https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html
+    # https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html
 
     def start_with_number(self, s):
         data = [c for c in s if c in '0123456789Xx']
@@ -158,10 +158,11 @@ class NLP(object):
 
         regex = re.compile('\\b(%s)\\W'%('|'.join(map(re.escape,to_filter_out))),re.UNICODE)
         clean = regex.sub(" ", self.text)
-        clean.decode("utf-8")
+        # clean.decode("utf-8")
 
-        clean_ok = ''.join([i for i in clean if i not in '()'])
-        clean_ok.decode("utf-8")
+        clean_ok = ''.join([i for i in clean if i not in '()#'])
+        clean_ok=clean_ok.replace("R.sub","")
+        # clean_ok.decode("utf-8")
         return clean_ok
 
     def get_clean_text(self):

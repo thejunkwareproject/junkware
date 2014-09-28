@@ -153,13 +153,15 @@ class PatentCorpus(object):
         return cols
 
     def get_records(self, _count, random=False):
+
         """
             Get a number of patents
             return :
             patents in full text
         """
 
-        patents=[]
+        abtracts=[]
+        titles=[]
 
         max_id = [max[0] for max in self.patents.execute("SELECT MAX(Id) FROM Patents;")][0]
         order = " ORDER BY id ASC "
@@ -179,10 +181,42 @@ class PatentCorpus(object):
         # print query
 
         for row in self.patents.execute(query):
+            # print row[3]
             # remove numbers and some unwantable characters
             text = ''.join(
                 [i for i in row[2] if not i.isdigit() and i not in stopwords])
 
-            patents.append(str(text))
+            abtracts.append(str(text))
+            titles.append(str(row[3]))
 
-        return patents
+        return ids, abtracts, titles
+
+    def get_records_by_ids(self, _ids):
+
+        abtracts=[]
+        titles=[]
+
+        my_ids=str(_ids).split(",")
+
+        ids = ""
+        for i, _id in enumerate(my_ids):
+            ids += "" + str(_id) + ""
+            if i != len(my_ids) - 1:
+                ids += ","
+
+        order = " AND id IN (" + ids + ")"
+
+        query = "SELECT * FROM Patents WHERE (Description!='')" + \
+            order + " LIMIT " + str(len(my_ids))
+
+        for row in self.patents.execute(query):
+            text = ''.join(
+                [i for i in row[2] if not i.isdigit() and i not in stopwords])
+
+            abtracts.append(str(text))
+            titles.append(str(row[3]))
+
+
+        return abtracts, titles
+
+

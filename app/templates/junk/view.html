@@ -1,32 +1,47 @@
 {% extends "dashboard_layout.html" %}
-
 {% block junkview %}
-    <!-- <div id="dna" class="frame">
-        <h4>Flow Citometry</h4>
-        <iframe id="molecules" src="/junk/partials/molecule" frameborder="0"></iframe>
-    </div> -->
+        <div class="row">
+            <a href="#" class="get-title btn btn-default btn-xs">Title</a>
+            <a href="#" class="get-abstract btn btn-default btn-xs">Abstract</a>
+            <a href="#" class="get-description btn btn-default btn-xs">Description</a>
+        </div>
 
-{% endblock %}
+        <div class="jumbotron">
+            <p class="junk-abstract">{{ junk.abstract }}</p>
+        </div>
+        <br>
+        <div class="junk-description">{{ junk.description }}</div>
 
-{% block junkstyles %}
-{{super()}}
-<link rel="stylesheet" href="/css/dashboard.css">
 {% endblock %}
 
 {% block junkscripts %}
+<script>
+    $(".get-description").click(function (e) {
+        $.get("/api/junk/{{objectId}}/description", function(data){
+            console.log(data);
+            var txt="";
+            for (var i = 0; i < data.description.length; i++) {
+                txt+="<p>"+ data.description[i] + "</p><br><br>";
+                console.log(txt);
+            }
+            $(".junk-description").html(txt)
+        })
+    })
+    
+    $(".get-title").click(function (e) {
+        $.get("/api/junk/{{objectId}}/title", function(data){
+            $(".junk-title").text(data.title)
+        })
+    })
 
-<script src="/libs/d3/d3.min.js"></script>
-<script src="/libs/rickshaw/rickshaw.min.js"></script>
-<script src="/libs/socket.io-client/dist/socket.io.min.js"></script>
-<script src="/js/dashboard.js"></script>
+    $(".get-abstract").click(function (e) {
+        $.get("/api/junk/{{objectId}}/abstract", function(data){
+            $(".junk-abstract").text(data.abstract)
+        })
+    })
 
-<!-- <script src="/libs/dat.gui/dat.gui.min.js"></script> -->
-<!-- <script src="/js/orbitControls.js"></script> -->
+</script>
+{% endblock %}
 
-
-
-
-
-
-{{super()}}
+{% block junkstyles %}
 {% endblock %}
