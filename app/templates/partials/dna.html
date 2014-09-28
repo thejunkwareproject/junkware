@@ -1,26 +1,16 @@
-<!DOCTYPE html> 
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<title>Electrophoresis Generator.D3</title>
-<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<style> svg {background-color: #000}</style>
-</head>
-<body>
-
+{% extends "layout.html" %}
+{% block content %}
 <div>
-    <input type="button" value="Load DNA" id="loadDNA"/>
-    <input type="button" value="Create SVG" id="createSVG"/>
-    <input type="button" value="Turn ON" id="subButton"/>
-    <input type="button" value="Reset" id="reset"/>
+    <input class="btn btn-default" type="button" value="Load DNA" id="loadDNA"/>
+    <input class="btn btn-default" type="button" value="Create SVG" id="createSVG"/>
+    <input class="btn btn-default" type="button" value="Turn ON" id="subButton"/>
+    <input class="btn btn-default" type="button" value="Reset" id="reset"/>
 </div>
 
 <p id="DNA_sequence"></p>
 <div class="dna"></div>
 
 
-<script src="../../app/static/js/electrophoresis.js"></script>
 <script>
     // load DNA Sequence
     var getSequence = function(_url, callback){
@@ -30,9 +20,9 @@
         })
     }
 
-    getSequence("pcrii_seq.txt", function(data){
-        var dnaViewer = new DNAViewer(data, ".dna",960,500);
-        // console.log(data);
+    getSequence("/data/dna", function(data){
+        var dnaViewer = new DNAViewer(data.dna, ".dna",960,500);
+        console.log(data);
         dnaViewer.cutSequences();
         dnaViewer.createSvg();
         dnaViewer.display()
@@ -58,9 +48,9 @@
         // console.log(dnaViewer);
         dnaViewer.resetDisplay();
     });
-
-
-
 </script>
-</body>
-</html>
+{% endblock %}
+{% block scripts %}
+<script src="/libs/d3/d3.min.js"></script>
+<script src="/js/electrophoresis.js"></script>
+{% endblock %}

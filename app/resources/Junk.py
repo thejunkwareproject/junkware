@@ -36,7 +36,7 @@ class JunkList(restful.Resource):
 
     def __init__(self, *args, **kwargs):
         self.parser = reqparse.RequestParser()
-        self.parser.add_argument('data', type=str)
+        self.parser.add_argument('dna', type=str)
         super(JunkList, self).__init__()
 
     def get(self):
@@ -44,8 +44,9 @@ class JunkList(restful.Resource):
 
     def post(self):
         args = self.parser.parse_args()
+        print args
 
-        if not args['data']:
+        if not args['dna']:
             abort(400)
 
         junk_id =  mongo.db.junks.insert(args)

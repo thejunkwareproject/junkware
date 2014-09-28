@@ -4,6 +4,8 @@ from flask import render_template, jsonify, send_from_directory
 from resources import app, api, mongo
 from Junk import Junk, JunkList
 
+from lib.dna import get_random_dna
+
 # routes
 @app.route('/')
 def home():
@@ -18,9 +20,15 @@ def junk_index():
 def junk_new():
     return render_template('junk/create.html')
 
-@app.route('/junk/partials/molecule')
-def molecule():
-    return render_template('partials/molecule.html')
+@app.route('/junk/partials/<path:path>')
+def partials(path):
+    print path
+    return render_template(os.path.join('partials',path+".html"))
+
+@app.route('/data/dna')
+def get_dna():
+    my_dna=get_random_dna()
+    return jsonify({"dna":my_dna})
 
 @app.route('/data/molecules')
 def get_molecules_list():
