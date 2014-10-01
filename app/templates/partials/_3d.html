@@ -1,0 +1,54 @@
+{% extends "dashboard_layout.html" %}
+
+{% block junkview %}
+
+<a href="#" class="btn btn-default three-save">Save</a>
+<a href="#" class="btn btn-default download-stl-three">Download STL with Three (bad)</a>
+
+<div id="threed" class="frame">
+    <div id="supershapes"></div>
+    <div id="three-axis"></div>
+</div>
+{% endblock %}
+
+{% block junkscripts %}
+<script src="/libs/stats.js/build/stats.min.js"></script>
+<script src="/libs/threejs/build/three.min.js"></script>
+<script src="/libs/threejs-exporters/exporters/MaterialExporter.js"></script>
+<script src="/libs/threejs-exporters/exporters/GeometryExporter.js"></script>
+<script src="/libs/threejs-exporters/exporters/STLExporter.js"></script>
+<script src="/libs/jszip/jszip.min.js"></script>
+<script src="/libs/FileSaver/FileSaver.js"></script>
+
+<script src="/js/3d/trackbackControls.js"></script>
+<script src="/js/3d/super3D.js"></script>
+<script src="/js/3d/draw3DShape.js"></script> 
+<script>
+    $(".three-save").click(function (e) {
+        var materialExporter = new THREE.MaterialExporter();
+        var materialEx = materialExporter.parse(object.material);
+
+    })
+
+     // console.log(object);
+
+        $(".download-stl").click(function (e) {
+            var zip = new JSZip();
+
+            generateSTL(object.scene, function(stl){
+                var content = zip.file("example.stl",stl);
+                content = zip.generate({type : "string"});
+                var blob = zip.generate({type:"blob"});
+                saveAs(blob, "hello.zip");
+            })
+
+        })
+
+        function generateSTL(_scene, callback) {
+            var stlExporter = new THREE.STLExporter();
+            // console.log(_scene);
+            stlShape = stlExporter.exportMesh(_scene);
+            callback(stlShape);
+        }
+</script>
+{% endblock %}
