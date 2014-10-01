@@ -18,7 +18,7 @@
 </head>
 <body>
   <div class="container" role="main" id="main">
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
@@ -34,10 +34,44 @@
             <li><a href="/">Home</a></li>
             <li><a href="/junks">Shop</a></li>
             <li class="active"><a href="/junk/new">Create new</a></li>
-            <!-- <li><a href="#contact">Contact</a></li> -->
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#" data-toggle="collapse" data-target="#devices">Devices</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right object-navbar hidden">
+              <li>
+                 <a href="/junk/{{ objectId }}" class="btn btn-link">
+                    <i class="fa fa-file-text"></i> Description
+                </a>
+              </li>
+              <li>
+                  <a href="/junk/{{ objectId }}/dna" class="btn btn-link">
+                      <i class="fa fa-leaf"></i> DNA
+                  </a>
+              </li>
+              <li>
+                  <a href="/junk/{{ objectId }}/brain" class="btn btn-link">
+                      <i class="fa fa-headphones"></i> Brain
+                  </a>
+              </li>
+              <li>
+                  <a href="/junk/{{ objectId }}/molecule" class="btn btn-link">
+                      <i class="fa fa-meh-o"></i> Molecule
+                  </a>
+              </li>
+              <li>
+                  <a href="/junk/{{ objectId }}/3d" class="btn btn-link">
+                      <i class="fa fa-question"></i> 3D Shape
+                  </a>
+              </li>
+              <li><a href="#" data-toggle="collapse" data-target="#devices">Devices <i class="fa fa-caret-down"></i></a></li>
+              <li>
+                  <a href="#" class="btn btn-lin active junk-save">
+                      <i class="fa fa-save"></i> Save
+                  </a>
+              </li>
+              <li>
+                  <a href="#" class="btn btn-lin active junk-print">
+                      <i class="fa fa-print"></i> Print
+                  </a>
+              </li>
           </ul>
         </div><!--/.nav-collapse -->
         <div id="devices" class="panel-collapse collapse">

@@ -1,14 +1,20 @@
 import os
 import json
 import random
-from flask import render_template, jsonify, send_from_directory
+import subprocess
+from flask import render_template, jsonify, send_from_directory, request, make_response
 from resources import app, api, mongo
 from Junk import Junk, JunkList
+
+from threading import Thread
+from lib.queue import RedisQueue
 
 from lib.dna import get_random_dna
 from lib.generator import ObjectGenerator, MarkovGenerator
 from lib.corpus import *
 from lib.nlp import NLP
+
+from resources.devices import *
 
 # init patents db
 patents=PatentCorpus('../../junkware-data/patents/Patents.sqlite3')
@@ -35,12 +41,13 @@ def partials(path):
 @app.route('/junk/<ObjectId:objectId>')
 def junwkare(objectId):
     junk=mongo.db.junks.find_one_or_404({"_id": objectId})
-    print junk
+    del junk["_id"]
     return render_template('junk/view.html', objectId=objectId, junk=junk)
 
 @app.route('/junk/<ObjectId:objectId>/<path:path>')
 def single_junk(objectId, path):
     junk=mongo.db.junks.find_one_or_404({"_id": objectId})
+    del junk["_id"]
     return render_template(os.path.join('partials',path+".html"), objectId=objectId, junk=junk)
 
 # data
@@ -62,6 +69,78 @@ def get_molecule_file(path):
     data_path= os.path.join(os.path.dirname(app_path), 'junkware-data')
     molecule_path=os.path.join(data_path, "molecules")
     return send_from_directory(molecule_path, path)
+
+@app.route('/data/toStl/<ObjectId:objectId>', methods = ['POST']) 
+def convertToSTL(objectId):
+
+    shapeData = json.loads(request.form["shape"])
+
+    print str(shapeData["m1"])+"ha"
+
+    shape1="shape1=supershape(" + "m=" + str(shapeData["m1"]) + ", n1=" + str(shapeData["n11"]) + ", n2=" + str(shapeData["n12"]) + ", n3=" + str(shapeData["n13"]) + ", a=1, b=1),"
+    
+    shape2="shape2=supershape(" + "m=" + str(shapeData["m2"]) + ", n1=" + str(shapeData["n21"]) + ", n2=" + str(shapeData["n22"]) + ", n3=" + str(shapeData["n23"]) + ", a=1, b=1),"
+    
+    print shape1, shape2
+
+    scad = template_scad.replace("#SHAPE1#", shape1).replace("#SHAPE2#", shape2)
+    print scad
+    print 'creating STL shape...'
+ 
+    make_path = os.path.join(os.getcwd(),"make")
+    scad_file = os.path.join(make_path,"STLconverter.scad")
+    stl_file = os.path.join(make_path,str(objectId)+".stl")
+
+    with open(scad_file, "w") as f:
+        f.write(scad)
+
+    cmd = "/usr/bin/openscad -o " + " " + stl_file + " " +scad_file
+
+    # no block, it start a sub process.
+    p = subprocess.Popen(cmd , shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+    # and you can block util the cmd execute finish
+    p.wait()
+
+    print "STL file saved at %s"%stl_file
+
+    with open(stl_file, "r") as f :
+        stl= f.read()
+
+    response = make_response(stl)
+    response.headers["Content-Disposition"] = "attachment; filename=" + str(objectId)+ ".stl"
+    return response
+    # return jsonify({'fileUrl' : "/data/stlFile/"+str(objectId)+"/download" })
+
+@app.route('/data/getStlFile/<ObjectId:objectId>') 
+def getSTL(objectId):
+    print objectId
+    make_path = os.path.join(os.getcwd(),"make")
+    stl_file = os.path.join(make_path,str(objectId)+".stl")
+
+    with open(stl_file, "r") as f :
+        stl= f.read()
+    response = make_response(stl)
+    response.headers["Content-Disposition"] = "attachment; filename=" + str(objectId)+ ".stl"
+    return response
+
+
+# init mindwave data thread
+headset_thread = None
+
+@app.route('/devices/eeg/headset/start') 
+def start_eeg():
+    print "start headset thread"
+    headset_thread = Thread(target=get_data_from_eeg_headset)
+    headset_thread.start()
+    return jsonify({"info":"headset connected."})
+
+@app.route('/devices/eeg/headset/stop') 
+def stop_eeg():
+    print "stop headset thread" 
+    headset_thread.stop()
+    return jsonify({"info":"headset stopped."})
+
 
 # API
 api.add_resource(JunkList, '/api/junks')
@@ -165,3 +244,25 @@ def img_static_proxy(path):
 def data_static_proxy(path):
     # send_static_file will guess the correct MIME type
     return app.send_static_file(os.path.join('data', path))
+
+
+template_scad = """
+include <supershape.scad>
+
+create_supershape();
+
+module create_supershape()
+{
+    scale([10,10,10])
+    RenderSuperShape(
+        #SHAPE1#
+        #SHAPE2#
+        phisteps = 8,
+        thetasteps = 64,
+        points=false,
+        pointcolor=[1,1,1],
+        wireframe=false,
+        faces=true);
+
+}
+"""

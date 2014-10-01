@@ -24,6 +24,9 @@
     "dat.gui":"latest",
     "stats.js":"latest",
     "font-awesome":"latest",
-    "threejs-exporters":"latest"
+    "threejs-exporters":"latest",
+    "jszip" : "latest",
+    "FileSaver" : "latest",
+    "requirejs" : "latest"
   }
 }

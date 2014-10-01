@@ -9,14 +9,14 @@ $(document).ready(function(){
 
     var socket = io.connect(url);
 
-    // socket.on('connect', function() {
-    //     socket.emit('getdesc', {data: 'I\'m connected!'});
-    // });
+    socket.on('connect', function() {
+        console.log("socket connected");
+        socket.emit('eeg_start', function(data) {
+            console.log(data);
+        });
+    });
 
-    // socket.on('description', function(data) {
-    //     console.log(data);
-    //     $("#description").text(data);
-    // });
+    
 
     var seriesData;
     var palette = new Rickshaw.Color.Palette( { scheme: 'classic9' } );
@@ -35,8 +35,8 @@ $(document).ready(function(){
 
     var EEGGraph = new Rickshaw.Graph.Socketio.Static( {
         element: document.getElementById("eeg"),
-        width: 400,
-        height: 200,
+        width: window.innerWidth,
+        height: 400,
         renderer: 'line',
         dataURL: url,
         onData: function(d) { 
@@ -100,8 +100,8 @@ $(document).ready(function(){
         // console.log(brainValues);
         if(!isDraw){
             margin = {top: 20, right: 20, bottom: 30, left: 40};
-            width = 200 - margin.left - margin.right;
-            height = 300 - margin.top - margin.bottom;
+            width = window.innerWidth - margin.left - margin.right;
+            height = 400 - margin.top - margin.bottom;
 
             x = d3.scale.ordinal()
                 .rangeRoundBands([0, width], .1);

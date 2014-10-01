@@ -2,35 +2,8 @@
 
 {% block content %}
 <div id="dashboard-header row">
-    <h2 class="junk-title">{{ junk.title }}</h2>
-
-    <p class="objectId">#{{ objectId }}</p>
+    <h2 class="junk-title">{{ junk.title }} <small class="objectId">#{{ objectId }}</small></h2>
     <ul class="nav nav-tabs">
-        <li>
-            <a href="/junk/{{ objectId }}" class="btn btn-link">
-                <i class="fa fa-smiley"></i> Description
-            </a>
-        </li>
-        <li>
-            <a href="/junk/{{ objectId }}/dna" class="btn btn-link">
-                <i class="fa fa-leaf"></i> DNA
-            </li>
-        </a>
-        <li>
-            <a href="/junk/{{ objectId }}/brain" class="btn btn-link">
-                <i class="fa fa-headphones"></i> Brain
-            </li>
-        </a>
-        <li>
-            <a href="/junk/{{ objectId }}/molecule" class="btn btn-link">
-                <i class="fa fa-meh-o"></i> Molecule
-        </li>
-        </a>
-        <li>
-            <a href="/junk/{{ objectId }}/3d" class="btn btn-link">
-                <i class="fa fa-question"></i> 3D Shape
-            </li>
-        </a>
     </ul>
 </div>
 
@@ -42,6 +15,10 @@
 
 {% block scripts %}
 <link rel="stylesheet" href="/css/dashboard.css">
+<script>
+    $("ul.object-navbar").removeClass('hidden');
+    var junk = {{ junk | tojson }};
+</script>
     {% block junkscripts %}
     {% endblock %}
 {% endblock %}

@@ -9,6 +9,7 @@ Requirements
     * [redis](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-redis)
     * mongodb
     * python3
+    * openSCAD (required to export clean STL for 3D printing)
 
 
 Start

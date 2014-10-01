@@ -1,9 +1,9 @@
 import time
 import bluetooth
-from lib.mindwave.MindwaveDataPoints import *
-from lib.mindwave.MindwaveDataPointReader import MindwaveDataPointReader
+from app.lib.mindwave.MindwaveDataPoints import *
+from app.lib.mindwave.MindwaveDataPointReader import MindwaveDataPointReader
 
-from lib.queue import RedisQueue
+from app.lib.queue import RedisQueue
 
 q = RedisQueue('mindwave')
 

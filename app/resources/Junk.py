@@ -69,12 +69,24 @@ class JunkList(restful.Resource):
         args["patents_ids"]=pats_ids
 
         # create a title
-            # title
         titles=""
         for t in pats[2]:
             titles += " "+t
 
         args['title']= MarkovGenerator(titles).generate_text(size=random.randint(4,7)).title()
+
+        # create element for geometry
+        shape={}
+        shape["m1"]  = random.randint(0,20)
+        shape["n11"] = random.randint(0,1000)
+        shape["n12"] = random.randint(0,1000)
+        shape["n13"] = random.randint(0,1000)
+        shape["m2"]  = random.randint(0,20)
+        shape["n21"] = random.randint(0,1000)
+        shape["n22"] = random.randint(0,1000)
+        shape["n23"] = random.randint(0,1000)
+
+        args['shape'] = shape
 
         junk_id =  mongo.db.junks.insert(args)
         return mongo.db.junks.find_one({"_id": junk_id})

@@ -2,37 +2,52 @@
 
 {% block junkview %}
 
-<a href="#" class="btn btn-default three-save">Save</a>
-<div id="threed" class="frame">
-    <div id="supershapes"></div>
-    <div id="three-axis"></div>
-</div>
+<div id="container"></div>
 {% endblock %}
 
 {% block junkscripts %}
-<script src="/libs/stats.js/build/stats.min.js"></script>
-<script src="/libs/threejs/build/three.min.js"></script>
-<script src="/libs/threejs-exporters/exporters/MaterialExporter.js"></script>
-<script src="/libs/threejs-exporters/exporters/GeometryExporter.js"></script>
+<script type="x-shader/x-vertex" id="vertexshader">
 
-<script src="/js/3d/trackbackControls.js"></script>
-<script src="/js/3d/super3D.js"></script>
-<script src="/js/3d/draw3DShape.js"></script> 
-<script>
-    $(".three-save").click(function (e) {
-        var materialExporter = new THREE.MaterialExporter();
-        var materialEx = materialExporter.parse(object.material);
-        // console.log(materialEx);
+  attribute vec3 a_color;
 
-        var geometryExporter = new THREE.GeometryExporter();
-        geometryEx=geometryExporter.parse(object.scene.geometry);
-        // console.log(JSON.stringify(geometryEx));
-        var shape = { "shape" : {
-                            "material" : materialEx,
-                            "geometry": geometryEx
-                        }
-                    };
-        $.post("/junk/")
-    })
+  varying vec3 cl;
+  varying vec3 vNormal;
+
+  void main() {
+  vNormal = normal;
+  gl_Position = projectionMatrix *
+  modelViewMatrix *
+  vec4(position,1.0);
+  cl = a_color;
+  }
 </script>
+
+<script type="x-shader/x-fragment" id="fragmentshader">
+
+  varying vec3 cl;
+  varying vec3 vNormal;
+
+  void main() {
+  vec3 light = vec3(0.5,0.2,1.0);
+
+  light = normalize(light);
+
+  float dProd = max(0.0, dot(abs(vNormal), light));
+
+  gl_FragColor = vec4(cl*(dProd), 1.0);
+  }
+</script>
+
+<script src="/libs/dat.gui/dat.gui.js"></script>
+<script src="/libs/stats.js/build/stats.min.js"></script>
+
+
+<script src="/js/superdupershape/lib/threejs/three.min.js"></script>
+<script src="/js/superdupershape/lib/threejs/Detector.js"></script>
+<script src="/js/superdupershape/lib/threex/THREEx.WindowResize.js"></script>
+<script src="/js/superdupershape/lib/threex/THREEx.FullScreen.js"></script>
+<script src="/js/superdupershape/lib/threex/THREEx.screenshot.js"></script>
+<script src="/js/superdupershape/lib/rainbob-vis/rainbowvis.js"></script>
+
+<script src="/libs/requirejs/require.js" data-main="/js/superdupershape/startSuperShape.js"></script>
 {% endblock %}
