@@ -14,6 +14,7 @@ from threading import Thread
 socketio = SocketIO(app)
 q = RedisQueue('mindwave')
 
+
 def emit_eeg_through_websocket():
     """Example of how to send server generated events to clients."""
     count = 0
@@ -34,13 +35,12 @@ def emit_eeg_through_websocket():
         # print point
         socketio.emit('brain', point, namespace='')
 
-socket_thread = None
 
 def start_eeg_socket_emit():
     print "start socket emit thread"
-    if(socket_thread):
-        socket_thread = Thread(target=emit_eeg_through_websocket)
-        socket_thread.start()
+    socket_thread = None
+    socket_thread = Thread(target=emit_eeg_through_websocket)
+    socket_thread.start()
 
 def stop_eeg_socket_emit():
     print "stop data"
@@ -66,6 +66,6 @@ def test_connect():
 
 @socketio.on('disconnect', namespace='')
 def test_disconnect():
-    socket_thread.stop()
+    socket_thread = None
     print('Client disconnected')
 
