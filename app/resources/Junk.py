@@ -73,7 +73,7 @@ class JunkList(restful.Resource):
         for t in pats[2]:
             titles += " "+t
 
-        args['title']= MarkovGenerator(titles).generate_text(size=random.randint(4,7)).title()
+        args['title']= "Random Object"# MarkovGenerator(titles).generate_text(size=random.randint(4,7)).title()
 
         # create element for geometry
         shape={}

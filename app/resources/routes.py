@@ -15,6 +15,8 @@ from lib.corpus import *
 from lib.nlp import NLP
 
 from resources.devices import *
+import var 
+print var.oxymeter_on
 
 # init patents db
 patents=PatentCorpus('../../junkware-data/patents/Patents.sqlite3')
@@ -125,22 +127,45 @@ def getSTL(objectId):
     return response
 
 
-# init mindwave data thread
-headset_thread = None
+headset_thread=None
+oxymeter_thread=None
 
-@app.route('/devices/eeg/headset/start') 
+@app.route('/devices/eeg/start') 
 def start_eeg():
     print "start headset thread"
     headset_thread = Thread(target=get_data_from_eeg_headset)
+    var.headset_on = True
     headset_thread.start()
     return jsonify({"info":"headset connected."})
 
-@app.route('/devices/eeg/headset/stop') 
+@app.route('/devices/eeg/stop') 
 def stop_eeg():
-    print "stop headset thread" 
-    headset_thread.stop()
+    print "stop headset thread"
+    var.headset_on = False
     return jsonify({"info":"headset stopped."})
 
+@app.route('/devices/eeg/test') 
+def test_eeg():
+    return jsonify({"state": var.headset_on })
+
+@app.route('/devices/oxymeter/start') 
+def start_oxymeter():
+    print "start oxymon thread"
+    oxymeter_thread = Thread(target=get_data_from_oxymon)
+    oxymeter_thread.start()
+    var.oxymeter_on = True
+    return jsonify({"info":"oxymon connected."})
+
+@app.route('/devices/oxymeter/stop') 
+def stop_oxymeter():
+    print "stop oxymon thread" 
+    print "from routes", var.headset_on
+    var.oxymeter_on = False
+    return jsonify({"info":"oxymon stopped."})
+
+@app.route('/devices/oxymeter/test') 
+def test_oxymeter():
+    return jsonify({"state": var.oxymeter_on })
 
 # API
 api.add_resource(JunkList, '/api/junks')

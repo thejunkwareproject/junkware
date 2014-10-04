@@ -37,18 +37,13 @@
             </ul>
             <ul class="nav navbar-nav navbar-right object-navbar hidden">
               <li>
-                 <a href="/junk/{{ objectId }}" class="btn btn-link">
-                    <i class="fa fa-file-text"></i> Description
-                </a>
-              </li>
-              <li>
                   <a href="/junk/{{ objectId }}/dna" class="btn btn-link">
                       <i class="fa fa-leaf"></i> DNA
                   </a>
               </li>
               <li>
                   <a href="/junk/{{ objectId }}/brain" class="btn btn-link">
-                      <i class="fa fa-headphones"></i> Brain
+                      <i class="fa fa-headphones"></i> Biometrics
                   </a>
               </li>
               <li>
@@ -61,7 +56,17 @@
                       <i class="fa fa-question"></i> 3D Shape
                   </a>
               </li>
-              <li><a href="#" data-toggle="collapse" data-target="#devices">Devices <i class="fa fa-caret-down"></i></a></li>
+             <!--  <li>
+                <a href="#" data-toggle="collapse" data-target="#devices">
+                <i class="fa fa-caret-down"></i> Devices 
+                </a>
+              </li>
+              --> 
+              <li>
+                 <a href="/junk/{{ objectId }}" class="btn btn-link">
+                    <i class="fa fa-file-text"></i> Description
+                </a>
+              </li>
               <li>
                   <a href="#" class="btn btn-lin active junk-save">
                       <i class="fa fa-save"></i> Save
@@ -74,48 +79,7 @@
               </li>
           </ul>
         </div><!--/.nav-collapse -->
-        <div id="devices" class="panel-collapse collapse">
-          <div class="panel-body">
-            <div class="row">
-              <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                
-                <h4><i class="fa fa-leaf"></i> DNA Sequencer
-                </h4>
-                
-                <a href="#" class="dna-device-start btn-success btn btn-default">
-                  <i class="fa fa-refresh"></i> Connected
-                </a>
 
-              </div>
-              <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                <h4><i class="fa fa-headphones"></i> EEG Headset</h4>
-
-                <a href="#" class="eeg-device-start btn btn-default">
-                  <i class="fa fa-play"></i> Start
-                </a>
-                <a href="#" class="eeg-device-stop btn btn-default">
-                  <i class="fa fa-stop"></i> Stop
-                </a>
-                <a href="#" class="eeg-device-test btn btn-default">
-                  <i class="fa fa-exclamation"></i> test
-                </a>
-              </div>
-              <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                <h4><i class="fa fa-heart"></i> Oxymeter</h4>
-                <a href="#" class="oxymeter-device-start btn btn-default">
-                  <i class="fa fa-play"></i> Start
-                </a>
-                <a href="#" class="oxymeter-device-stop btn btn-default">
-                  <i class="fa fa-stop"></i> Stop
-                </a>
-                <a href="#" class="oxymeter-device-test btn btn-default">
-                  <i class="fa fa-exclamation"></i> test
-                </a>
-              </div>
-
-            </div>
-          </div>
-        </div>
       </div>
     </div>
     {% for message in get_flashed_messages() %}
@@ -126,6 +90,15 @@
 
 </body>
 <script type="text/javascript" src="/js/main.js"></script>
+<script>
+  $("#devices a").click(function(e){
+    console.log($(this).attr('href'));
+    $.get($(this).attr('href'), function (data) {
+      console.log(data);
+    })
+    e.preventDefault();
+  })
+</script>
 
 {% block scripts %}{% endblock %}
 

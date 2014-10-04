@@ -16,6 +16,10 @@ class RedisQueue(object):
     def empty(self):
         """Return True if the queue is empty, False otherwise."""
         return self.qsize() == 0
+    
+    def clean(self):
+        """Delete all elements in the queue."""
+        return self.__db.delete(self.key)
 
     def put(self, item):
         """Put item into the queue."""

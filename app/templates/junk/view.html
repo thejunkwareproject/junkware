@@ -1,9 +1,9 @@
 {% extends "dashboard_layout.html" %}
 {% block junkview %}
         <div class="row">
-            <a href="#" class="get-title btn btn-default btn-xs">Title</a>
-            <a href="#" class="get-abstract btn btn-default btn-xs">Abstract</a>
             <a href="#" class="get-description btn btn-default btn-xs">Description</a>
+            <a href="#" class=g"et-abstract btn btn-default btn-xs">Abstract</a>
+            <a href="#" class="get-title btn btn-default btn-xs">Title</a>
         </div>
 
         <div class="jumbotron">
@@ -14,34 +14,47 @@
 
 {% endblock %}
 
+{% block junkstyles %}
+    <style>
+    .message {
+        margin-bottom: 12px;
+        font-size: 11pt;
+    }
+    </style>
+{% endblock %}
+
 {% block junkscripts %}
+
+<script src="/js/jquery.shuffleLetters.js"></script>
+<script src="/js/Terminal.js"></script>
+
 <script>
-    $(".get-description").click(function (e) {
-        $.get("/api/junk/{{objectId}}/description", function(data){
-            console.log(data);
-            var txt="";
-            for (var i = 0; i < data.description.length; i++) {
-                txt+="<p>"+ data.description[i] + "</p><br><br>";
-                console.log(txt);
-            }
-            $(".junk-description").html(txt)
-        })
-    })
-    
+
+    var terminal= new Terminal(".junk-description", "    ",["ok","test"] );
+    terminal.init();
+
     $(".get-title").click(function (e) {
         $.get("/api/junk/{{objectId}}/title", function(data){
-            $(".junk-title").text(data.title)
+            $(".junk-title").text(data.title);
+            $(".junk-title").shuffleLetters();
         })
     })
 
     $(".get-abstract").click(function (e) {
         $.get("/api/junk/{{objectId}}/abstract", function(data){
             $(".junk-abstract").text(data.abstract)
+            $(".junk-abstract").shuffleLetters();
+
+        })
+    })
+
+    $(".get-description").click(function (e) {
+        $.get("/api/junk/{{objectId}}/description", function(data){
+            // console.log(data.description);
+            terminal.addMessages(data.description)
+
         })
     })
 
 </script>
-{% endblock %}
-
-{% block junkstyles %}
 {% endblock %}

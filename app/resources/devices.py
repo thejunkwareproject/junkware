@@ -1,13 +1,17 @@
 import time
 import bluetooth
+
 from lib.mindwave.MindwaveDataPoints import *
 from lib.mindwave.MindwaveDataPointReader import MindwaveDataPointReader
 
+from datetime import datetime
+from os import path
+from lib.oximon.cms50 import CMS50
 from lib.queue import RedisQueue
-# from resources.socketIO import socketio, emit
-# from threading import Thread
+import var
 
-q = RedisQueue('mindwave')
+q_mindwave = RedisQueue('mindwave')
+q_oxymeter = RedisQueue('oxymeter')
 
 seriesLength=12
 
@@ -34,8 +38,7 @@ def get_data_from_eeg_headset():
     print "starting headset"
     mindwaveDataPointReader = MindwaveDataPointReader()
     mindwaveDataPointReader.start()
-
-    while(True):
+    while(var.headset_on):
         dataPoint = mindwaveDataPointReader.readNextDataPoint()
 
         # poor signal
@@ -85,7 +88,7 @@ def get_data_from_eeg_headset():
                 att_med_series[key]["data"].append({ "x" : int(time.time()), "y" : point[key] })
 
 
-            q.put({
+            q_mindwave.put({
                     "point" :point,
                     "series":[ EEG_series[x] for x in EEG_series],
                     "values":[ att_med_series[x] for x in att_med_series]
@@ -96,3 +99,22 @@ def get_data_from_eeg_headset():
             time.sleep(1)
         except KeyError:
             pass
+
+def get_data_from_oxymon():
+    port = '/dev/ttyUSB0'
+    if not path.exists(port):
+        exit("oximon: could not open '%s': no such file or directory" % port)
+
+    oximeter = CMS50(port)
+    print('Oxymeter Device : #date\theart rate\toxygen saturation')
+
+    while var.oxymeter_on:
+        try:
+            if oximeter.update():
+                # print dir(oximeter)
+                output = { "heart_rate" : oximeter.hr, "oxygen_saturation" : oximeter.sat, "x":oximeter.x,"y":oximeter.y }
+                print output
+                q_oxymeter.put(output)
+        except SerialException as e: 
+            exit('oximon: %s' % e)
+    oximeter.close()

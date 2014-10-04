@@ -12,40 +12,71 @@ from lib.queue import RedisQueue
 from threading import Thread
 
 socketio = SocketIO(app)
-q = RedisQueue('mindwave')
+q_mindwave = RedisQueue('mindwave')
+q_oxymeter = RedisQueue('oxymeter')
 
 
 def emit_eeg_through_websocket():
+    """Send oxymeter server generated events to clients."""
+    count = 0
+
+    while True:
+
+        print "brain ",count
+        time.sleep(1)
+        count += 1
+        point = q_mindwave.get()
+        point = ast.literal_eval(point)
+
+        # send
+        point['count'] = count
+        point["time"]=int(time.time())
+
+        # print "emit brain"
+        # print q_mindwave.qsize()
+        socketio.emit('brain', point, namespace='')
+
+def emit_oxymeter_through_websocket():
     """Example of how to send server generated events to clients."""
     count = 0
 
     while True:
-        # print count
+        print "oxy ", count
         time.sleep(1)
         count += 1
-        point = q.get()
-        point = ast.literal_eval(point)
-        # print point
+        point = q_oxymeter.get()
 
-        # print EEG_series
-        # print "new point"
+        point = ast.literal_eval(point)
+
         point['count'] = count
         point["time"]=int(time.time())
 
         # print point
-        socketio.emit('brain', point, namespace='')
-
+        socketio.emit('oxymeter', point, namespace='')
 
 def start_eeg_socket_emit():
     print "start socket emit thread"
-    socket_thread = None
-    socket_thread = Thread(target=emit_eeg_through_websocket)
-    socket_thread.start()
+    # print q_mindwave.qsize()
+    q_mindwave.clean()
+    # print q_mindwave.qsize()
+    eeg_socket_thread = None
+    eeg_socket_thread = Thread(target=emit_eeg_through_websocket)
+    eeg_socket_thread.start()
 
 def stop_eeg_socket_emit():
     print "stop data"
-    socket_thread.stop()
+    eeg_socket_thread.stop()
 
+def start_oxymeter_socket_emit():
+    print "start oxymeter socket emit thread"
+    q_oxymeter.clean()
+    oxymeter_socket_thread = None
+    oxymeter_socket_thread = Thread(target=emit_oxymeter_through_websocket)
+    oxymeter_socket_thread.start()
+
+def stop_oxymeter_socket_emit():
+    print "stop eeg data"
+    oxymeter_socket_thread.stop()
 
 # sockets
 @socketio.on('my event', namespace='')
@@ -58,7 +89,15 @@ def test_message(message):
 def headset_connected():
     print "eeg start"
     start_eeg_socket_emit()
-    emit('socket_thread',{'data': "socket started"})
+    return {'message': "EEG socket started"}
+    # emit('eeg_socket_thread',{'data': "EEG socket started"})
+
+@socketio.on('oxymeter_start', namespace='')
+def headset_connected():
+    print "oxymeter start"
+    start_oxymeter_socket_emit()
+    return {'message': "Oxymeter socket started"}
+    # emit('oxymeter_socket_thread',{'data': "oxymeter socket started"})
 
 @socketio.on('connect', namespace='')
 def test_connect():
@@ -66,6 +105,6 @@ def test_connect():
 
 @socketio.on('disconnect', namespace='')
 def test_disconnect():
-    socket_thread = None
+    oxymeter_socket_thread = None
     print('Client disconnected')
 
