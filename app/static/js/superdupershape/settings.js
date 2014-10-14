@@ -1,6 +1,6 @@
 define(function() {
-  var WIDTH = window.innerWidth;
-  var HEIGHT = window.innerHeight;
+  var WIDTH = window.innerWidth-250;
+  var HEIGHT = window.innerHeight-120;
 
   return {
     width: WIDTH,

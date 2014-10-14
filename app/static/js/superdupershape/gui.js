@@ -1,6 +1,6 @@
 define(function() {
 
- console.log(junk.shape);
+ // console.log(junk.shape);
 
   var settings = {
     t1: {min: -2, max: 2},
@@ -22,7 +22,6 @@ define(function() {
   };
 
   var controls = new function() {
-
 
     this.t1 = 0;
     this.d1 = 0;
@@ -51,7 +50,7 @@ define(function() {
         console.log("ok ");
       //  console.log(data);
         uriContent = 'data:Application/octet-stream;download=' + window.location.pathname.split("/")[2]+".stl,"+encodeURIComponent(data);
-        console.log(uriContent);
+        // console.log(uriContent);
         document.location = uriContent;
       })
     }
@@ -67,7 +66,7 @@ define(function() {
 
   for (var i in settings) {
     var s = settings[i];
-    console.log(s);
+    // console.log(s);
     gui.add(controls, i, s.min, s.max).listen().onChange(update);
   }
 
@@ -78,6 +77,16 @@ define(function() {
     listeners.forEach(function  (listener) {
       listener(controls);
     })
+
+    junk.shape.m1=controls.m1;
+    junk.shape.n11=controls.n11;
+    junk.shape.n12=controls.n12;
+    junk.shape.n13=controls.n13;
+    junk.shape.m2=controls.m2;
+    junk.shape.n21=controls.n21;
+    junk.shape.n22=controls.n22;
+    junk.shape.n23=controls.n23;
+
   }
 
   // gui.remember(controls);

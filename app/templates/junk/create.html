@@ -64,7 +64,7 @@
                 console.log('API request');
                 console.log(data.dna);
                 $.post( "/api/junks", {"dna":data.dna}, function(data) {
-                    window.location.href = "/junk/"+data._id.$oid;
+                    window.location.href = "/junk/"+data._id.$oid+"/brain";
                 })
             });
 

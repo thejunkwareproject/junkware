@@ -1,11 +1,22 @@
 {% extends "dashboard_layout.html" %}
 
 {% block junkview %}
-<video id="video"></video>
+
+{% if junk.inventorPic %}
+<img style="display:none" id="photo" alt="photo">
+<!-- <img src="data:image/png;base64,{{junk.inventorPic}}" alt=""> -->
+{% endif %}
+
 <button id="startbutton" class="btn btn-link">Take photo</button>
-<canvas id="canvas"></canvas>
-<img style="display:none" src="http://placekitten.com/g/320/261" id="photo" alt="photo">
-<a id="savebutton" class="btn btn-link" href="#">Save photo</a>
+<!-- <a id="savebutton" class="btn btn-link" href="#">Download photo</a> -->
+<div class="row">
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+    <video id="video"></video>
+  </div>
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+    <canvas id="canvas"></canvas>
+  </div>
+</div>
 {% endblock %}
 
 {% block junkscripts %}
@@ -58,28 +69,44 @@
   }, false);
 
   function takepicture() {
+    //draw image
     canvas.width = width;
     canvas.height = height;
     canvas.getContext('2d').drawImage(video, 0, 0, width, height);
-    // var data = canvas.toDataURL('image/png');
-    // photo.setAttribute('src', data);
-    var data = canvas.toDataURL('image/png');
-    // photo.setAttribute('src', data);
-    savebutton.href = data;
-    savebutton.download = "filename.jpg";
-  }
+    // $("canvas").hide();
 
+    // var coeff = 50/100;
+    // canvas.width = $("#video").width()*coeff;
+    // canvas.height = $("#video").height()*coeff;
 
-  function savepicture() {
-    var data = canvas.toDataURL('image/png');
-    photo.setAttribute('src', data);
-    this.href = data;
+    var dataBase64 =canvas.toDataURL('image/png').replace(/^data:image\/(png|jpg);base64,/, "");
+    
+    
+    resizeBase64Img(dataBase64,canvas.width/2, canvas.height/2).then(function(newImg){
+       $("body").append("<br/>Resized image:").append(newImg);
+    })
+
+  
   }
 
   startbutton.addEventListener('click', function(ev){
       takepicture();
     ev.preventDefault();
   }, false);
+
+  function resizeBase64Img(base64, width, height) {
+    var canvas = document.createElement("canvas");
+    canvas.width = width;
+    canvas.height = height;
+    var context = canvas.getContext("2d");
+    var deferred = $.Deferred();
+    $("<img/>").attr("src", "data:image/gif;base64," + base64).load(function() {
+        context.scale(width/this.width,  height/this.height);
+        context.drawImage(this, 0, 0); 
+        deferred.resolve($("<img/>").attr("src", canvas.toDataURL()));               
+    });
+    return deferred.promise();    
+}
 
 })();
 </script>

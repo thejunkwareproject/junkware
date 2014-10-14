@@ -330,6 +330,7 @@ THREE.TrackballControls = function ( object, domElement ) {
 
         if ( lastPosition.distanceToSquared( _this.object.position ) > EPS ) {
 
+            console.log(_this);
             _this.dispatchEvent( changeEvent );
 
             lastPosition.copy( _this.object.position );

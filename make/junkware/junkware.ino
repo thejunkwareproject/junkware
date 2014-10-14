@@ -30,22 +30,22 @@ void setup() {
   pinMode(dnaMotorPin, OUTPUT);
 }
 
-void resetBoard() {
-  Serial.println("device init");
-  DNAisReady = true;
+void initBoard() {
+
+  // init
+  Serial.println("device reset");
+  DNAisReady = false;
   DNAstarted = false;
   DNAinit = false;
   DNAdone = false;
+
   digitalWrite(bluePin, LOW);
   digitalWrite(redPin, LOW);    
   digitalWrite(greenPin, LOW);
   lcd.clear();
-}
 
-void initBoard() {
-
-  // init
-  Serial.println("device init");
+  //
+  Serial.println("Device init");
   lcd.clear();
   lcd.setCursor(0,1);
   lcd.print("Warming up...");
@@ -66,56 +66,50 @@ void initBoard() {
 void loop() {
 
   if( digitalRead(dnaSwitchPin)==LOW) {
-    resetBoard();
-
-    Serial.println("device is ready");
-
+    delay(1000); 
+    initBoard();
     lcd.setCursor(0,0);
     lcd.print("Waiting for order.");    
     digitalWrite(bluePin, HIGH);
+    DNAisReady = true;
+    Serial.println("device is ready");
     delay(1000);
-    delay(1000); 
-    DNAstarted = true;
-    Serial.println("device start");
+  } 
 
-  }
-
-  if (DNAisReady == true && DNAstarted == true) {
-
-    if(DNAinit == false && DNAdone == false) {
-      initBoard();
-//      start = millis();
-      DNAinit= true;
-    } 
-    else if (DNAinit == true && DNAdone == false) {
-
-      Serial.println("device up");  
-      digitalWrite(bluePin, LOW);
-      digitalWrite(redPin, HIGH);
-      digitalWrite(dnaMotorPin, HIGH);
-
-      lcd.clear();
-      loader();
-      delay(sequencingDuration);
-      DNAdone = true;
-
-    }
-    else {
-      Serial.println("device done");  
-      digitalWrite(dnaMotorPin, LOW);
-
-      digitalWrite(redPin, LOW);
-      digitalWrite(greenPin, HIGH);
-
-      lcd.clear();
-      lcd.setCursor(0,0);
-      lcd.print("Test Done.");
-      lcd.setCursor(0,1);
-      lcd.print("Success !!");
+  if (Serial.available()) {
+    char order = Serial.read();
+    Serial.println(order);
+    if(order == 'I' && DNAisReady == true) {
+      Serial.println("Order received !");
+      analyzeDNA();
+      DNAisReady = false;
     }
   }
 }
 
+
+void analyzeDNA() {
+   Serial.println("device up");  
+   digitalWrite(bluePin, LOW);
+   digitalWrite(redPin, HIGH);
+   digitalWrite(dnaMotorPin, HIGH);
+   
+   lcd.clear();
+   loader();
+   delay(sequencingDuration);
+   
+   Serial.println("device done");  
+   digitalWrite(dnaMotorPin, LOW);
+   
+   digitalWrite(redPin, LOW);
+   digitalWrite(greenPin, HIGH);
+   
+   lcd.clear();
+   lcd.setCursor(0,0);
+   lcd.print("Test Done.");
+   lcd.setCursor(0,1);
+   lcd.print("Success !!");
+}
 
 void loader() {
   byte p20[8] = {
@@ -165,6 +159,7 @@ void loader() {
   };
 
   //Make progress characters
+  int total=0;
   lcd.createChar(0, p20);
   lcd.createChar(1, p40);
   lcd.createChar(2, p60);
@@ -179,10 +174,21 @@ void loader() {
     for (int j=0; j<5; j++) {
       lcd.setCursor(i, 1);   
       lcd.write(j);
-      delay(100);
+      delay(300);
+      total=total+300;
     } 
   }
+  Serial.println(total);
 }
+
+
+
+
+
+
+
+
+
 
 
 

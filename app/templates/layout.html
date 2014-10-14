@@ -18,6 +18,10 @@
 </head>
 <body>
   <div class="container" role="main" id="main">
+  <div class="alert alert-save alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <strong>Saved!</strong> Your junk has been saved in the db.
+  </div>
     <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -63,12 +67,17 @@
               </li>
               --> 
               <li>
-                 <a href="/junk/{{ objectId }}" class="btn btn-link">
+                 <a href="/junk/{{ objectId }}/text" class="btn btn-link">
                     <i class="fa fa-file-text"></i> Description
                 </a>
               </li>
               <li>
-                  <a href="#" class="btn btn-lin active junk-save">
+                  <a href="/junk/{{ objectId }}/photo" class="btn btn-lin active junk-photo">
+                      <i class="fa fa-user"></i> Photo
+                  </a>
+              </li>
+              <li>
+                  <a href="/api/junk/{{ objectId }}" class="btn btn-lin active junk-save">
                       <i class="fa fa-save"></i> Save
                   </a>
               </li>
@@ -98,6 +107,32 @@
     })
     e.preventDefault();
   })
+
+  $(".alert-save").hide();
+
+  $("a.junk-save").click(function(e){
+    var url = $(this).attr('href');
+    console.log(url);
+    console.log(junk);
+    e.preventDefault();
+
+    $.ajax({
+        url: url,
+        type: 'PUT',
+        data: JSON.stringify(junk),
+        success: function(result) {
+            // Do something with the result
+            console.log(result);
+            $(".alert-save").show();
+        }
+    });
+    /*
+      $.post(url, function (junk) {
+         console.log(data);
+      })
+    */
+    })
+
 </script>
 
 {% block scripts %}{% endblock %}

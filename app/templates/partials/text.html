@@ -1,16 +1,20 @@
 {% extends "dashboard_layout.html" %}
 {% block junkview %}
-        <!-- <div class="row">
+        <div class="row">
             <a href="#" class="get-description btn btn-default btn-xs">Description</a>
             <a href="#" class="get-abstract btn btn-default btn-xs">Abstract</a>
             <a href="#" class="get-title btn btn-default btn-xs">Title</a>
-        </div> -->
+        </div>
 
         <div class="jumbotron">
             <p class="junk-abstract">{{ junk.abstract }}</p>
         </div>
         <br>
-        <div class="junk-description">{{ junk.description }}</div>
+        <div class="junk-description">
+            {% for desc in junk.description %}
+               <div class="message">{{ desc }}</div>
+            {% endfor %}
+        </div>
 
 {% endblock %}
 
@@ -37,6 +41,7 @@
         $.get("/api/junk/{{objectId}}/title", function(data){
             $(".junk-title").text(data.title);
             $(".junk-title").shuffleLetters();
+            junk.title=data.title;
         })
     })
 
@@ -44,13 +49,15 @@
         $.get("/api/junk/{{objectId}}/abstract", function(data){
             $(".junk-abstract").text(data.abstract)
             $(".junk-abstract").shuffleLetters();
-
+            junk.abstract = data.abstract;
         })
     })
 
     $(".get-description").click(function (e) {
         $.get("/api/junk/{{objectId}}/description", function(data){
             // console.log(data.description);
+            $(".junk-description").html("");
+            junk.description = data.description;
             terminal.addMessages(data.description)
 
         })

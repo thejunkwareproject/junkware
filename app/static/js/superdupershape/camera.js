@@ -7,6 +7,8 @@ define(['settings'], function(settings) {
       settings.near,
       settings.far);
 
+    camera.updateProjectionMatrix();
+
   camera.position.z = 300;
   return camera;
 });

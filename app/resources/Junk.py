@@ -30,8 +30,18 @@ q = RedisQueue('mindwave')
 
 class Junk(restful.Resource):
 
+    def __init__(self, *args, **kwargs):
+        self.parser = reqparse.RequestParser()
+
     def get(self, junk_id):
         return mongo.db.junks.find_one_or_404({"_id": junk_id})
+
+    def put(self, junk_id):
+        for f in request.form:
+            data=json.loads(f)
+        # print data
+        mongo.db.junks.update({"_id": junk_id}, data)
+        return mongo.db.junks.find_one({"_id": junk_id})
 
     def delete(self, junk_id):
         mongo.db.junks.find_one_or_404({"_id": junk_id})
@@ -73,7 +83,7 @@ class JunkList(restful.Resource):
         for t in pats[2]:
             titles += " "+t
 
-        args['title']= "Random Object"# MarkovGenerator(titles).generate_text(size=random.randint(4,7)).title()
+        args['title']= "Future Object"# MarkovGenerator(titles).generate_text(size=random.randint(4,7)).title()
 
         # create element for geometry
         shape={}
