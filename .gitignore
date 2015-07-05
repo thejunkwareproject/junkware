@@ -1,3 +1,4 @@
+book
 app/make/*
 corpus*
 venv
@@ -19,7 +20,6 @@ __pycache__/
 # Distribution / packaging
 .Python
 env/
-bin/
 build/
 develop-eggs/
 dist/
