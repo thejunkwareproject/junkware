@@ -2,6 +2,7 @@ import os
 import json
 import random
 import subprocess
+import serial
 from flask import render_template, jsonify, send_from_directory, request, make_response
 from resources import app, api, mongo
 from Junk import Junk, JunkList
@@ -127,6 +128,7 @@ def getSTL(objectId):
     return response
 
 
+
 headset_thread=None
 oxymeter_thread=None
 
@@ -166,6 +168,21 @@ def stop_oxymeter():
 @app.route('/devices/oxymeter/test') 
 def test_oxymeter():
     return jsonify({"state": var.oxymeter_on })
+
+# check if arduino is connected
+
+# arduino = serial.Serial('/dev/ttyACM0',9600)
+
+@app.route('/devices/sequencer/start') 
+def start_sequencer():
+    if(arduino is not None) :
+        time.sleep(2) # waiting the initialization...
+        print("initialising")
+        arduino.write('I') # init
+        return jsonify({"state": "done" })
+    else:
+        return jsonify({"state": "arduino missing" })
+
 
 # API
 api.add_resource(JunkList, '/api/junks')

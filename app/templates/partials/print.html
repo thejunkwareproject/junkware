@@ -1,0 +1,32 @@
+<html>
+<head>
+    <link rel="stylesheet" href="/css/print.css">
+</head>
+<body>
+    <h1>{{ junk.title }}</h1>
+    <h2>#{{ objectId }}</h2>
+    <p class="abstract">{{ junk.abstract }}</p>
+    <p>ISSUE DATE : {{ junk.created_at}}</p>
+    <div id="qrcontainer">
+        <div id="qrcode"></div>
+    </div>
+
+    <div class="logo">
+        <img src="/img/logo-text-BW.png" alt="logo" width="200px">
+    </div>
+</body>
+
+<script type="text/javascript" src="/js/qrcode.min.js"></script>
+<script type="text/javascript">
+    window.onload = function() { window.print(); }
+    new QRCode(document.getElementById("qrcode"),{
+        text: "http://app.junkware.io/junk/{{ objectId }}",
+        width: 100,
+        height: 100,
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+    });
+
+</script>
+</html>

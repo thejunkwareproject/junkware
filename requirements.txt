@@ -24,3 +24,4 @@ textblob==0.9
 pyyaml
 networkx
 -e git+git://github.com/zacharydenton/bard.git#egg=bard
+pyserial

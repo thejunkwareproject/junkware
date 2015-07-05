@@ -14,14 +14,20 @@
 {% endblock %}    
 
 {% block scripts %}
+
 <link rel="stylesheet" href="/css/dashboard.css">
 <script>
-    $("ul.object-navbar").removeClass('hidden');
     var junk = {{ junk | tojson }};
+
+    $("ul.object-navbar").removeClass('hidden');
+    $(".main-nav").addClass('hidden');
+
 </script>
-    {% block junkscripts %}
-    {% endblock %}
+{% block junkscripts %}
 {% endblock %}
+
+{% endblock %}
+
 
 {% block styles %}
     {% block junkstyles %}

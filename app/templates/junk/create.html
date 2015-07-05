@@ -9,7 +9,7 @@
 <div class="alert alert-default alert-dismissible" role="alert">
   <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 
-  <strong>DNA analysis succesfull!</strong> Do you want to continue to to the dashboard?
+  <strong>DNA analysis succesfull!</strong> Do you want to continue to  the dashboard?
     <a type="button" class="create-junk btn btn-success">Yes</a>
     <a type="button" class="cancel-dna btn btn-failure">No, retry DNA Analysis </a>
 </div>
@@ -34,6 +34,10 @@
     $(".process-dna").click(function(){
         $(".progress").show();
 
+        $.get('/devices/sequencer/start', function(data){
+            console.log(data);
+        })
+
         $.get("/data/randomDNA", function(data){
             
             console.log( data);
@@ -51,7 +55,7 @@
                     $(".alert").show();
                     $(".decoding").text("Success !");
                 }
-            }, 100)
+            }, 300)
 
             $(".decoding").css("color", "#fff");
 

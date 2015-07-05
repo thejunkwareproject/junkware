@@ -3,6 +3,8 @@
 {% block junkview %}
 
 <div id="container"></div>
+
+<div id="three-axis"></div>
 {% endblock %}
 
 {% block junkscripts %}
@@ -38,6 +40,8 @@
   }
 </script>
 
+
+
 <script src="/libs/dat.gui/dat.gui.js"></script>
 <script src="/libs/stats.js/build/stats.min.js"></script>
 
@@ -48,7 +52,8 @@
 <script src="/js/superdupershape/lib/threex/THREEx.FullScreen.js"></script>
 <script src="/js/superdupershape/lib/threex/THREEx.screenshot.js"></script>
 <script src="/js/superdupershape/lib/rainbob-vis/rainbowvis.js"></script>
-<script src="/js/superdupershape/lib/trackbackControls.js"></script>
+<!-- <script src="/js/superdupershape/lib/trackbackControls.js"></script> -->
+<script src="/js/superdupershape/lib/orbitControls.js"></script>
 
 <script src="/libs/requirejs/require.js" data-main="/js/superdupershape/startSuperShape.js"></script>
 {% endblock %}

@@ -9,6 +9,8 @@
     <link rel="canonical" href="http://junkware.io" />
 
     <script type="text/javascript" src="/libs/jquery/dist/jquery.js"></script>
+    <!-- <script>jQuery.noConflict();</script> -->
+
     <script type="text/javascript" src="/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 
     <link rel="stylesheet" href="/css/bootstrap-cyborg.min.css">
@@ -34,7 +36,7 @@
           <a class="navbar-brand" href="/">Junkware</a>
         </div>
         <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
+          <ul class="nav main-nav navbar-nav">
             <li><a href="/">Home</a></li>
             <li><a href="/junks">Shop</a></li>
             <li class="active"><a href="/junk/new">Create new</a></li>
@@ -82,7 +84,7 @@
                   </a>
               </li>
               <li>
-                  <a href="#" class="btn btn-lin active junk-print">
+                  <a href="/junk/{{ objectId }}/print" class="btn btn-lin active junk-print">
                       <i class="fa fa-print"></i> Print
                   </a>
               </li>
@@ -100,31 +102,33 @@
 </body>
 <script type="text/javascript" src="/js/main.js"></script>
 <script>
-  $("#devices a").click(function(e){
-    console.log($(this).attr('href'));
-    $.get($(this).attr('href'), function (data) {
-      console.log(data);
+  jQuery(document).ready(function($){
+    $("#devices a").click(function(e){
+      console.log($(this).attr('href'));
+      $.get($(this).attr('href'), function (data) {
+        console.log(data);
+      })
+      e.preventDefault();
     })
-    e.preventDefault();
-  })
 
-  $(".alert-save").hide();
+    $(".alert-save").hide();
 
-  $("a.junk-save").click(function(e){
-    var url = $(this).attr('href');
-    console.log(url);
-    console.log(junk);
-    e.preventDefault();
+    $("a.junk-save").click(function(e){
+      var url = $(this).attr('href');
+      console.log(url);
+      console.log(junk);
+      e.preventDefault();
 
-    $.ajax({
-        url: url,
-        type: 'PUT',
-        data: JSON.stringify(junk),
-        success: function(result) {
-            // Do something with the result
-            console.log(result);
-            $(".alert-save").show();
-        }
+      $.ajax({
+          url: url,
+          type: 'PUT',
+          data: JSON.stringify(junk),
+          success: function(result) {
+              // Do something with the result
+              console.log(result);
+              $(".alert-save").show();
+          }
+      });
     });
     /*
       $.post(url, function (junk) {

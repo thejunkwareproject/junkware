@@ -4,18 +4,18 @@
         {% for junk in junks %}
         <div class="col-sm-3">
             <div class="col-item">
-                <div class="photo">
+                <!-- <div class="photo">
                     <img src="http://placehold.it/350x260" class="img-responsive" alt="a" />
-                </div>
+                </div> -->
                 <div class="info">
                     <div class="row">
                         <h2><small><a href="/junk/{{junk._id }}">
                         {{ junk.title }}
                         </a></small></h2>
-
+                        {{ junk.abstract }}
                         <div class="price col-md-6">
                             <h4 class="price-text-color">
-                                $199.99
+                                $XXX
                             </h4>
                         </div>
                         <div class="rating hidden-sm col-md-6">
@@ -46,4 +46,14 @@
 <style>
 
 </style>
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+    $(".price").each(function(d){
+        $(this).find("h4").html("$"+Math.floor(Math.random()*1000));
+    });
+</script>
+
 {% endblock %}

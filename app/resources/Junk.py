@@ -1,4 +1,4 @@
-import os, time
+import os, time, datetime
 import json
 from threading import Thread
 import random
@@ -88,15 +88,17 @@ class JunkList(restful.Resource):
         # create element for geometry
         shape={}
         shape["m1"]  = random.randint(0,20)
-        shape["n11"] = random.randint(0,1000)
-        shape["n12"] = random.randint(0,1000)
-        shape["n13"] = random.randint(0,1000)
+        shape["n11"] = random.randint(0,50)
+        shape["n12"] = random.randint(0,50)
+        shape["n13"] = random.randint(0,50)
         shape["m2"]  = random.randint(0,20)
-        shape["n21"] = random.randint(0,1000)
-        shape["n22"] = random.randint(0,1000)
-        shape["n23"] = random.randint(0,1000)
+        shape["n21"] = random.randint(0,50)
+        shape["n22"] = random.randint(0,50)
+        shape["n23"] = random.randint(0,50)
 
         args['shape'] = shape
+
+        args["created_at"]=datetime.datetime.utcnow()
 
         junk_id =  mongo.db.junks.insert(args)
         return mongo.db.junks.find_one({"_id": junk_id})

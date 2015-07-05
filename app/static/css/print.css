@@ -1,0 +1,142 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* fonts */
+@font-face {
+    font-family: 'BebasNeueRegular';
+    src: url('fonts/bebasneue-webfont.eot');
+    src: url('fonts/bebasneue-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/bebasneue-webfont.woff') format('woff'),
+         url('fonts/bebasneue-webfont.ttf') format('truetype'),
+         url('fonts/bebasneue-webfont.svg#BebasNeueRegular') format('svg');
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'LeagueGothicRegular';
+    src: url('fonts/leaguegothic-regular-webfont.eot');
+    src: url('fonts/leaguegothic-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/leaguegothic-regular-webfont.woff') format('woff'),
+         url('fonts/leaguegothic-regular-webfont.ttf') format('truetype'),
+         url('fonts/leaguegothic-regular-webfont.svg#LeagueGothicRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+/* reset */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+margin: 0;
+padding: 0;
+border: 0;
+font-size: 100%;
+font: inherit;
+vertical-align: baseline;
+}
+
+html, body {
+height: 100%;
+}
+
+body {
+line-height: 1;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+display: block;
+}
+
+ol, ul {
+list-style: none;
+}
+
+blockquote, q {
+quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+content: '';
+content: none;
+}
+
+table {
+border-collapse: collapse;
+border-spacing: 0;
+}
+
+*:focus {  
+outline: none;
+}
+
+/* general */
+body {
+font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 12px;
+line-height: 1.5;
+font-style: normal;
+font-weight: normal;
+text-align: center;
+-webkit-font-smoothing: antialiased;
+-webkit-text-size-adjust: 100%;
+margin-left:100px;
+width: 60%;
+}
+
+h1 {
+font-family: 'LeagueGothicRegular';
+font-size: 40px;
+font-weight: 100;
+font-style: normal;
+text-align: center;
+text-transform: uppercase;
+-webkit-font-smoothing: antialiased;
+line-height: 1;
+margin: 20px 0 0 0;
+padding: 0;
+}
+
+h2 {
+font-family: 'LeagueGothicRegular';
+font-size: 20px;
+font-weight: 100;
+font-style: normal;
+text-align: center;
+text-transform: uppercase;
+-webkit-font-smoothing: antialiased;
+color: #555;
+line-height: 1;
+margin: 20px 0 20px 0;
+padding: 0;
+}
+
+h4 {
+  font-size: 18px;
+}
+a {
+color: #555;
+text-decoration: none;
+outline: none;
+}
+
+p {
+font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 12px;
+line-height: 1.5;
+font-style: normal;
+padding: 10px 0 10px 0;
+color: #555;
+font-weight: 100;
+font-style: normal;
+text-align: center;
+text-transform: uppercase;
+-webkit-font-smoothing: antialiased;
+
+}
+
+#qrcode img{
+    margin:0 auto;
+    text-align: center;
+    padding:30px 0 30px 0;
+}

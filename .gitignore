@@ -1,3 +1,4 @@
+app/make/*
 corpus*
 venv
 data
@@ -8,7 +9,7 @@ out
 _data
 inspiration
 junkware-data
-
+backup*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
