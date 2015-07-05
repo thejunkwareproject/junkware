@@ -1,9 +1,7 @@
 app/make/*
 corpus*
 venv
-data
 oldies
-data/*/
 out
 .ipynb_checkpoints
 _data
